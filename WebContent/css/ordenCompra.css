@@ -1,0 +1,28 @@
+@CHARSET "ISO-8859-1";
+.noMP{
+	margin:0px !important;
+	padding:0px !important;
+	line-height: 17px;
+}
+.logoOrdenCompra{
+	position:absolute;
+}
+.cabecera{
+	height:210px;
+}
+.tableCabecera p{
+	display:inline-block;
+}
+.dblock{
+	display:block !important;
+}
+.page-content{
+	background:#e2e1e0;
+}
+#ordenCompraContainer{
+	background:#ffffff;
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.footerOrdenCompra{
+	margin-top:30px;
+}

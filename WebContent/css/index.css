@@ -1,0 +1,101 @@
+@CHARSET "ISO-8859-1";
+body{
+	overflow:hidden;
+	font-family: 'Roboto', sans-serif;
+}
+.header{
+	min-height:663px;
+	background-image:url("../images/img_index.jpg");
+	background-repeat-x:no-repeat;
+	background-repeat-y:no-repeat;
+	background-size:cover;
+	background-origin: initial;
+    background-clip: initial;
+    background-color: initial;
+}
+.opacity{
+    background-color: RGBA(0, 0, 0, 0.67);
+    min-height: 650px;
+}
+.footer{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}
+.banner-text{
+	border-left: 5px solid #BE2525;
+    padding: 15px 40px;
+    color: #fff;
+    margin-top: 170px;
+}
+#bitel{
+	background-color:#FDEC2A !important;
+}
+.logo_bitel{
+	vertical-align: text-bottom;
+}
+.footer{
+	background-color:#FDEC2A;
+}
+#bitel .nav>li>a:focus,#bitel .nav>li>a:hover{
+	background-color:#1F8B96 !important;
+	color:#FDEC2A !important;
+}
+#bitel li a{
+	color : #1F8B96;
+}
+i{
+	font-size:25px;
+}
+.footer .nav-item{
+	display:inline-block;
+}
+.vr{
+	display: inline-block;
+    vertical-align: top;
+    background: #777777;
+    width: 1px;
+    height: 50px;
+    margin: 0 5px;
+}
+.text-footer{
+	display: inline-block;
+    width: 130px;
+    height: 50px;
+    vertical-align: top;
+    text-align: left;
+    padding-top: 5px;
+    line-height:1.375!important;
+}
+.f-45{
+	font-size:45px;
+}
+.f-30{
+	font-size:31px !important;
+}
+.second{
+	margin-left:25px;
+	width:140px !important;
+}
+.third{
+	margin-left:25px;
+	width:80px !important;
+}
+.redsocial-fb .fa-facebook{
+	vertical-align: bottom;
+}
+.redsocial-fb a:hover{
+	background-color:#FDEC2A !important;
+}
+ul a{
+	font-weight:bold;
+}
+.logoays{
+	position: absolute;
+    left: 10%;
+    bottom: -35%;
+}

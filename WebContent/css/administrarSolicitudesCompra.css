@@ -1,0 +1,53 @@
+@CHARSET "ISO-8859-1";
+body{
+	background:#e2e1e0;
+}
+#administrarSolicitudesContainer{
+	background:#ffffff;
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+#TableSolicitudes_wrapper{
+	margin-top:5%;
+	margin-bottom:10%;
+}
+.p-20{
+	padding:20px;
+}
+.select2 {
+	width:100% !important;
+}
+table td{
+	font-weight: 400;
+	color:black;
+}
+table th{
+	font-weight: 400;
+	color:black;
+}
+::before , ::after{
+	opacity: 1 !important;
+}
+.btn .fa{
+	margin-top: -15px;
+    padding-left: 6px;
+}
+.fa{
+	padding-top: 0px !important;
+}
+#afterSelect{
+	display:none;
+}
+
+#setDatos{
+	margin-top:20px;
+}
+#TableSolicitudes tbody tr td{
+	vertical-align:middle;
+}	
+.btn .fa.fa-sm {
+    font-size: 1rem;
+    margin-top: -5px;
+}
+.btnGroupAction{
+	margin-right:5px;
+}

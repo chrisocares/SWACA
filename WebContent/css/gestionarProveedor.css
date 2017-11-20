@@ -1,0 +1,16 @@
+@CHARSET "ISO-8859-1";
+.group-input{
+	width:48% !important;
+	margin-right:10px;
+}
+.group-input2{
+	width:20% !important;
+	margin-right:10px;
+}
+.solo-input{
+	width:100% !important;
+	margin-right:10px;
+}
+.modal-footer{
+	border-top:none !important;
+}

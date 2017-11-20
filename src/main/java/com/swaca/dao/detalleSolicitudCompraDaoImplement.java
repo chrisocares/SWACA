@@ -18,12 +18,16 @@ import com.swaca.model.Producto;
 import com.swaca.model.SolicitudCompra;
 import com.swaca.model.detalleSolicitudCompra;
 import com.swaca.model.estadoDetalleSolicitudCompra;
+import com.swaca.util.DateTimeUtil;
 
 @Service
 public class detalleSolicitudCompraDaoImplement implements detalleSolicitudCompraDao{
 
 	@PersistenceContext
 	EntityManager em;
+	
+	DateTimeUtil convertDATE = new DateTimeUtil();
+
 	
 	@Override
 	@Transactional
@@ -61,7 +65,8 @@ public class detalleSolicitudCompraDaoImplement implements detalleSolicitudCompr
 			detalleSolicitudCompraBean detallesolicitudCompraBean = new detalleSolicitudCompraBean();
 			detallesolicitudCompraBean.setDescripcion(detallesolicitudCompra.get(i).getDescripcion());
 			detallesolicitudCompraBean.setIdDetalleSolicitudCompra(detallesolicitudCompra.get(i).getIdDetalleSolicitudCompra());
-			detallesolicitudCompraBean.setFechaRegistro(detallesolicitudCompra.get(i).getFechaRegistro());
+			String dateTime = convertDATE.dateTimeMYSQL(detallesolicitudCompra.get(i).getFechaRegistro());
+			detallesolicitudCompraBean.setFecha(dateTime);
 			detallesolicitudCompraBean.setEstado(detallesolicitudCompra.get(i).getEstado().getDescripcion());
 			detallesolicitudCompraBean.setCantidad(detallesolicitudCompra.get(i).getIdSolicitudCompra().getIdSolicitudCompra());
 
@@ -84,7 +89,8 @@ public class detalleSolicitudCompraDaoImplement implements detalleSolicitudCompr
 			detalleSolicitudCompraBean detallesolicitudCompraBean = new detalleSolicitudCompraBean();
 			detallesolicitudCompraBean.setDescripcion(detallesolicitudCompra.get(i).getDescripcion());
 			detallesolicitudCompraBean.setIdDetalleSolicitudCompra(detallesolicitudCompra.get(i).getIdDetalleSolicitudCompra());
-			detallesolicitudCompraBean.setFechaRegistro(detallesolicitudCompra.get(i).getFechaRegistro());
+			String dateTime = convertDATE.dateTimeMYSQL(detallesolicitudCompra.get(i).getFechaRegistro());
+			detallesolicitudCompraBean.setFecha(dateTime);
 			detallesolicitudCompraBean.setEstado(detallesolicitudCompra.get(i).getEstado().getDescripcion());
 			detallesolicitudCompraBean.setCantidad(detallesolicitudCompra.get(i).getCantidad());
 			detallesolicitudCompraBean.setCodigo(detallesolicitudCompra.get(i).getIdSolicitudCompra().getIdSolicitudCompra());
@@ -129,7 +135,8 @@ public class detalleSolicitudCompraDaoImplement implements detalleSolicitudCompr
 			detalleSolicitudCompraBean detallesolicitudCompraBean = new detalleSolicitudCompraBean();
 			detallesolicitudCompraBean.setDescripcion(detallesolicitudCompra.get(i).getDescripcion());
 			detallesolicitudCompraBean.setIdDetalleSolicitudCompra(detallesolicitudCompra.get(i).getIdDetalleSolicitudCompra());
-			detallesolicitudCompraBean.setFechaRegistro(detallesolicitudCompra.get(i).getFechaRegistro());
+			String dateTime = convertDATE.dateTimeMYSQL(detallesolicitudCompra.get(i).getFechaRegistro());
+			detallesolicitudCompraBean.setFecha(dateTime);
 			detallesolicitudCompraBean.setEstado(detallesolicitudCompra.get(i).getEstado().getDescripcion());
 			detallesolicitudCompraBean.setCantidad(detallesolicitudCompra.get(i).getCantidad());
 			detallesolicitudCompraBean.setCodigo(detallesolicitudCompra.get(i).getIdSolicitudCompra().getIdSolicitudCompra());
@@ -151,6 +158,15 @@ public class detalleSolicitudCompraDaoImplement implements detalleSolicitudCompr
 	public void updateCantidad(Integer idSolicitudDetalle,Integer cantidad) {
 		detalleSolicitudCompra detalle = new detalleSolicitudCompra(); 
 		String sql = "UPDATE detalleSolicitudCompra set cantidad="+cantidad.toString()+" where idDetalleSolicitudCompra="+idSolicitudDetalle.toString();
+		Query query = em.createQuery(sql);
+		query.executeUpdate();
+	}
+	
+	@Transactional
+	@Override
+	public void updateCantidadRegistrada(Integer idSolicitudDetalle,Integer cantidad) {
+		detalleSolicitudCompra detalle = new detalleSolicitudCompra(); 
+		String sql = "UPDATE detalleSolicitudCompra set cantidadRegistrada="+cantidad.toString()+" where idDetalleSolicitudCompra="+idSolicitudDetalle.toString();
 		Query query = em.createQuery(sql);
 		query.executeUpdate();
 	}

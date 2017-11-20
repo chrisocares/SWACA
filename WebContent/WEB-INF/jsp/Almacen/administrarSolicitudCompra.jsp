@@ -376,7 +376,7 @@ function buildTableSolicitudes(){
  			$.each (solicitudesCompra , function (i ,solicitudCompra){
  				console.log(solicitudCompra.fechaEntrega1);
  				tableSolicitudes.row.add([solicitudCompra.idSolicitudCompra,solicitudCompra.descripcionTienda,solicitudCompra.descripcion,
- 				              solicitudCompra.fechaRegistro,solicitudCompra.fechaEntrega,solicitudCompra.descripcionEstado,
+ 				              solicitudCompra.fechaRegistro1,solicitudCompra.fechaEntrega,solicitudCompra.descripcionEstado,
  				              '<button  id="verSolicitud-'+solicitudCompra.idSolicitudCompra+'" data-toggle="modal" data-target="#detallexsolicitudModal" class="btnVerSolicitud mdl-button mdl-js-button mdl-button--icon">'+
 								'<i class="fa fa-list-ul" aria-hidden="true"></i>'+
 									'</button>'+
@@ -407,7 +407,7 @@ function buildTableDetallesxProveedor(idProveedor){
  	 		}else{
  			$.each (detallesolicitudes , function (i ,detallesolicitud){
  				tableDetallesS.row.add([detallesolicitud.idDetalleSolicitudCompra,detallesolicitud.codigo,detallesolicitud.cantidad
- 				        				,detallesolicitud.nombreProducto,detallesolicitud.descripcion,detallesolicitud.fechaRegistro,'S/.'+detallesolicitud.precioTotal,
+ 				        				,detallesolicitud.nombreProducto,detallesolicitud.descripcion,detallesolicitud.fecha,'S/.'+detallesolicitud.precioTotal,
  				        				'<button  id="addOrden-'+detallesolicitud.idDetalleSolicitudCompra+'" class="btnAddOrden mdl-button mdl-js-button mdl-button--icon">'+
  										'<i class="glyphicon glyphicon-plus"></i>'+
  										'</button>'+

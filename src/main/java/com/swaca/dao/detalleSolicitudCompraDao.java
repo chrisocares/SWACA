@@ -14,5 +14,6 @@ public interface detalleSolicitudCompraDao {
 	detalleSolicitudCompraBean getByIdDetalleSolicitud(Integer idDetalleSolicitud);
 	List<detalleSolicitudCompraBean> listSolicitudesbySolicitud(Integer idSolicitud);
 	void updateCantidad(Integer idSolicitudDetalle , Integer Cantidad);
+	void updateCantidadRegistrada(Integer idSolicitudDetalle , Integer Cantidad);
 	void updateEstado(Integer idSolicitudDetalle , Integer idEstado);
 }

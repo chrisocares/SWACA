@@ -14,11 +14,14 @@ import com.swaca.bean.detalleSolicitudCompraBean;
 import com.swaca.model.SolicitudCompra;
 import com.swaca.model.detalleSolicitudCompra;
 import com.swaca.model.detalleXorden;
+import com.swaca.util.DateTimeUtil;
 
 @Service
 public class DetallexOrdenDaoImplement implements DetallexOrdenDao{
 	@PersistenceContext
 	private EntityManager em;
+	
+	DateTimeUtil convertDATE = new DateTimeUtil();
 	
 	@Transactional
 	@Override
@@ -56,7 +59,8 @@ public class DetallexOrdenDaoImplement implements DetallexOrdenDao{
 			String nombreProducto = marca + " - " + modelo + " - " + tipo + " - " + color + " - " +banda;
 			detalleSolicitud.setNombreProducto(nombreProducto);
 			detalleSolicitud.setCantidad(listdetallexorden.get(i).getDetallecompra().getCantidad());
-			detalleSolicitud.setFechaRegistro(listdetallexorden.get(i).getDetallecompra().getIdSolicitudCompra().getFechaEntrega());
+			detalleSolicitud.setCantidadRegistrada(listdetallexorden.get(i).getDetallecompra().getCantidadRegistrada());
+			detalleSolicitud.setFecha(convertDATE.dateTimeMYSQL(listdetallexorden.get(i).getDetallecompra().getIdSolicitudCompra().getFechaEntrega()));
 			Double precioCompraProducto = listdetallexorden.get(i).getDetallecompra().getIdProducto().getPrecioCompra();
 			Double cant = (double)listdetallexorden.get(i).getDetallecompra().getCantidad();
 			Double total = precioCompraProducto * cant;

@@ -84,6 +84,11 @@ public class detalleSolicitudCompraController {
 		detalleDao.updateCantidad(idDetalle, cantidad);
 	}
 	
+	@RequestMapping(value="updateCantidadRegistradaDetalle-{idSolicitudDetalle}-{cantidad}" , method = RequestMethod.POST)
+	public void updateCantidadRegistrada (@PathVariable("idSolicitudDetalle") Integer idDetalle , @PathVariable("cantidad")Integer cantidad){
+		detalleDao.updateCantidadRegistrada(idDetalle, cantidad);
+	}
+	
 	@RequestMapping(value="updateEstadoDetalle-{idSolicitudDetalle}-{idEstado}" , method = RequestMethod.POST)
 	public void updateEstadoDetalleS (@PathVariable("idSolicitudDetalle") Integer idDetalle , @PathVariable("idEstado")Integer idEstado){
 		detalleDao.updateEstado(idDetalle, idEstado);

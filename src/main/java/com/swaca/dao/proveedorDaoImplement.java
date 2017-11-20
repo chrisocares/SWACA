@@ -98,7 +98,6 @@ public class proveedorDaoImplement implements proveedorDao{
 		ProveedorBean proveedorBean = new ProveedorBean();
 		String querySQL = "SELECT e FROM Proveedor e where e.idProveedor="+idProveedor.toString();
 		Query query = em.createQuery(querySQL);
-		System.out.println("xxx");
 		proveedor = (Proveedor)query.getSingleResult();
 		proveedorBean.setDepartamento(proveedor.getDepartamento());
 		proveedorBean.setDireccion(proveedor.getDireccion());

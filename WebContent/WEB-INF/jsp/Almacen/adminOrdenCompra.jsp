@@ -63,10 +63,11 @@
 							    <button type="button" class="btn btn-outline-mdb-color waves-effect" onclick="verOrden()"><i class="fa fa-file-text-o  fa-sm pr-2 btnGroupAction" aria-hidden="true"></i> Ver Orden de Compra</button>							   
 							    <button type="button" class="btn btn-outline-mdb-color waves-effect" onclick="generarReporte()"><i class="fa fa-file-pdf-o  fa-sm pr-2 btnGroupAction" aria-hidden="true"></i>Generar PDF</button>
 							    <button type="button" class="btn btn-outline-mdb-color waves-effect" onclick="enviarEmail()"><i class="fa fa-envelope-o fa-sm pr-2 btnGroupAction" aria-hidden="true"></i>Enviar Proveedor</button>
-								<button type="button" class="btn btn-outline-mdb-color waves-effect"><i class="fa fa-check fa-sm pr-2 btnGroupAction" aria-hidden="true"></i>Finalizar</button>
-								<button type="button" class="btn btn-outline-mdb-color waves-effect" data-toggle="modal" data-target="#LOG"><i class="fa fa-history fa-sm pr-2 btnGroupAction" aria-hidden="true"></i>Historial</button>
+								<button id="btnCerrarOrden" type="button" class="btn btn-outline-mdb-color waves-effect" onclick="cerrarOrden()"><i class="fa fa-check fa-sm pr-2 btnGroupAction" aria-hidden="true"></i>Finalizar</button>
+								<button type="button" class="btn btn-outline-mdb-color waves-effect" id="BtnLOG"><i class="fa fa-history fa-sm pr-2 btnGroupAction" aria-hidden="true"></i>Historial</button>
 							</div>
 		    			</div>
+		    			<button type="button" class="btnListInventario btn btn-info" data-toggle="modal" data-target="#listInventarioFisico">REGISTRAR INVENTARIO </button>
 		    			<div class="container m-t-15" id="tableDetallesxOrden">
 		    			<table id="TableDetalleOrdenCompra" class="table table-striped table-bordered table-responsive" cellspacing="0" width="100%">
 							    <thead>
@@ -79,6 +80,8 @@
 							            <th>Estado</th>
 							            <th>Cantidad Total</th>
 							            <th>Total</th>
+							            <th></th>
+							            <th></th>
 							        </tr>
 							    </thead>
 						    <tbody>
@@ -132,11 +135,12 @@
 				<table id="tableLOG" class="table table-striped table-bordered table-responsive" cellspacing="0" width="100%">
 				    <thead>
 				        <tr>
-				            <th>N° Detalle Compra</th>
+				            <th>N°</th>
 				            <th>Fecha</th>
 				            <th>Producto</th>
-				            <th>Cantidad</th>
-				            <th></th>
+				            <th>Cantidad Total</th>
+				            <th>Cantidad FISICO</th>
+				            <th>Descripción</th>
 				        </tr>
 				    </thead>
 				    <tbody>
@@ -150,6 +154,39 @@
       </div>
 	</div>
 </div>
+<div class="modal fade" id="listInventarioFisico"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header light-blue darken-3 white-text">
+                <h4 class="title">Registre el inventario del Pedido</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+            <table id="muestraDetallesSolicitud" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp container-fluid">
+			  <thead>
+			    <tr>
+			      <th style="text-align:left">Producto</th>
+			      <th style="text-align:center">Cantidad</th>
+			      <th style="text-align:left"></th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			  </tbody>
+			</table>
+            <!--Footer-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>  
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="plugins/jquery/jquery-3.2.1.js"></script>
 <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -161,13 +198,15 @@
 <script src="plugins/js/jquery.dataTables.min.js"></script>
 <script src="plugins/js/dataTables.bootstrap4.min.js"></script>
 <script>
+var Total;
+var arrayListos = [];
+var arrayPendientes = [];
 $('#txtBienvenido').text("Administrar Orden de Compra");
 $('.select').select2();
 var select_val;
 var correoProveedor; 
 tableLOG = $('#tableLOG').DataTable();
 tableDetallesS = $('#TableDetalleOrdenCompra').DataTable();
-buildTableLOG();
 $(document).ready(function(){
 	initSelect();
 	$('#datosOrdenCompra').css('display','none');
@@ -204,13 +243,15 @@ function initSelect(){
 }
 
 function poblarCamposxOrden(select_val){
+	arrayListos.length = 0;
+	arrayPendientes.length=0;
 	$.ajax({
  		url: 'getOrdenCompraByID-'+select_val,
  		type: 'post',
  		dataType: 'json',
  		data: '',
  		success: function(datos){
- 			$('#txtFechaElaborada').text(datos.fechaEmitida);
+ 			$('#txtFechaElaborada').text(datos.fecha);
  			$('#txtProveedor').text(datos.nombreProveedor);
  			$('#txtDireccion').text(datos.direccionEntrega);
  			$('#txtEstadoOC').text(datos.nombreestado);
@@ -227,11 +268,40 @@ function poblarCamposxOrden(select_val){
  	 			tableDetallesS.clear().draw();
  	 		}else{
  			$.each (detallexorden , function (i ,detalle){
+ 				if(detalle.estado=="TOTALMENTE ATENDIDO"){
+ 	 				tableDetallesS.row.add([detalle.idSolicitud,detalle.nombreProducto,"",detalle.descripcion
+ 	 				                        ,detalle.fecha,detalle.estado,detalle.cantidad,'S/.'+detalle.precioTotal,
+ 	 				                     	'<button  data-toggle="modal" data-target="#LOG" id="log-'+detalle.idDetalleSolicitudCompra+'" class="btnLOG mdl-button mdl-js-button mdl-button--icon">'+
+  											'<i class="fa fa-history fa-sm pr-2"></i>'+
+  											'</button>',
+ 	 				                        '<i class="fa fa-check-square-o iconTableCenter" style="color:green"></i>'
+ 	 				        				]).draw(false);
+ 	 				var arreglo ={row1: detalle.idDetalleSolicitudCompra};
+ 	 				arrayListos.push(arreglo);
+ 				}else{
  				tableDetallesS.row.add([detalle.idSolicitud,detalle.nombreProducto,"",detalle.descripcion
- 				                       ,detalle.fechaRegistro,detalle.estado,detalle.cantidad,'S/.'+detalle.precioTotal,
+ 				                       ,detalle.fecha,detalle.estado,detalle.cantidad,'S/.'+detalle.precioTotal,
+ 				                      '<button  data-toggle="modal" data-target="#LOG" id="log-'+detalle.idDetalleSolicitudCompra+'" class="btnLOG mdl-button mdl-js-button mdl-button--icon">'+
+ 										'<i class="fa fa-history fa-sm pr-2"></i>'+
+ 										'</button>',
+ 										'<i class="fa fa-road iconTableCenter" style="color:red"></i>'
  				        				]).draw(false);
+	 				var arreglo ={row1: detalle.idDetalleSolicitudCompra};
+ 	 				arrayPendientes.push(arreglo);
+ 						}
 	 				});
 	 	 		}
+	 	 		var Total = detallexorden.length;
+	 	 		var Listos = arrayListos.length;
+	 	 		var Pendientes = arrayPendientes.length;
+	 	 		if(Pendientes >0){
+	 	 			$('#btnCerrarOrden').prop("disabled", true);
+	 	 		}else if (Total = Listos){
+	 	 			$('#btnCerrarOrden').prop("disabled", false);
+	 	 		}
+	 	 		console.log("T"+Total);
+	 	 		console.log("L"+Listos);
+	 	 		console.log("P"+Pendientes);
  			}
  		});	
 }
@@ -274,21 +344,81 @@ function enviarEmail(){
 	$('#ModalExito').modal('show'); 
 }
 
-function buildTableLOG(){
+function buildTableLOG(id){
 	$.ajax({
- 		url: 'getSolicitudesCompra-1',
+ 		url: 'getLOGxDetalle-'+id,
  		type: 'post',
  		dataType: 'json',
  		data: '',
  		success: function(logs){
  			$.each (logs , function (i ,log){
- 				tableLOG.row.add([]).draw(false);
+ 				tableLOG.row.add([log.idLog,log.fecha,log.producto,log.cantidad,log.cantidadActual,log.descripcion]).draw(false);
  				});
  			}
  		});
-		
 	}
 
+$(document).on('click','.btnLOG',function(e){
+	var id =this.id.slice(4,this.id.length);
+	tableLOG.clear().draw();
+	buildTableLOG(id);
+});
+$(document).on('click','.btnListInventario',function(e){
+	$('#muestraDetallesSolicitud tbody').empty();
+	$.ajax({
+ 		url: 'getListaDetallexOrden-'+select_val,
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(detallesolicitudes){
+ 			$.each (detallesolicitudes , function (i ,detallesolicitud){
+  	 			$('#listInventarioFisico tbody').append(
+	 					'<tr><td style="text-align:left">'+detallesolicitud.nombreProducto+'</td>'+
+	 					'<td style="text-align:center"><input style="width:35%" value="'+detallesolicitud.cantidad+'" readonly class="text-center" type="number"> / <input style="width:35%" id="inputCantidad-'+detallesolicitud.idDetalleSolicitudCompra+'"readonly class="text-center" type="number" min="0" max="'+detallesolicitud.cantidad+'" value="'+detallesolicitud.cantidadRegistrada+'"></td>'+
+	 					'<td style="text-align:left">'+
+	 					'<button  id="modifyDetalleSolicitud-'+detallesolicitud.idDetalleSolicitudCompra+'" class="btnmodifyDetalleSolicitud mdl-button mdl-js-button mdl-button--icon">'+
+						'<i class="fa fa-cog"></i>'+
+						'</button>'+
+	 					'<button  id="saveCantidadDetalleSolicitud-'+detallesolicitud.idDetalleSolicitudCompra+'" class="btnmodifyCantidad mdl-button mdl-js-button mdl-button--icon" style="display:none">'+
+						'<i class="fa fa-floppy-o"></i>'+
+						'</button>'+
+	 					'</td>'+
+	 					'</tr>');
+ 					});
+	 	 		}
+ 		});
+});
+
+$(document).on('click','.btnmodifyDetalleSolicitud',function(e){
+	idModificarCantidad=this.id.slice(23,this.id.length);
+	document.getElementById(this.id).style.display = 'none';
+	document.getElementById("saveCantidadDetalleSolicitud-"+idModificarCantidad).style.display = 'block';
+	$("#inputCantidad-"+idModificarCantidad).attr("readonly", false);
+});  
+
+$(document).on('click','.btnmodifyCantidad',function(e){
+	idModificarCantidad=this.id.slice(29,this.id.length);
+	var can = $('#inputCantidad-'+idModificarCantidad).val();
+	document.getElementById(this.id).style.display = 'none';
+	document.getElementById("modifyDetalleSolicitud-"+idModificarCantidad).style.display = 'block';
+	updateCantidad(can);
+});
+
+function updateCantidad(cantidad){
+	$.ajax({
+ 		url: 'updateCantidadRegistradaDetalle-'+idModificarCantidad+'-'+cantidad,
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(){
+ 			}
+ 		});
+}
+
+$("#listInventarioFisico").on("hide.bs.modal", function () {
+	tableDetallesS.clear().draw();
+	poblarCamposxOrden(select_val);
+});
 </script>
 </body>
 </html>

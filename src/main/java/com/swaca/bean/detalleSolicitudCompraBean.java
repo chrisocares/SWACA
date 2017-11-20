@@ -106,10 +106,28 @@ public class detalleSolicitudCompraBean {
 	public void setPrecioTotal(Double precioTotal) {
 		this.precioTotal = precioTotal;
 	}
-	
+
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
+	public Integer getCantidadRegistrada() {
+		return cantidadRegistrada;
+	}
+
+	public void setCantidadRegistrada(Integer cantidadRegistrada) {
+		this.cantidadRegistrada = cantidadRegistrada;
+	}
+
 	private Integer idDetalleSolicitudCompra;
 
 	private Date fechaRegistro;
+	
+	private String fecha;
 
 	private String descripcion;
 
@@ -130,5 +148,7 @@ public class detalleSolicitudCompraBean {
 	private Double precioTotal;
 	
 	private Integer idSolicitud;
+	
+	private Integer cantidadRegistrada;
 
 }

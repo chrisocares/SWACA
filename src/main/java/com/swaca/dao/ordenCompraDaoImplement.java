@@ -15,6 +15,7 @@ import com.swaca.bean.SolicitudCompraBean;
 import com.swaca.bean.ordenCompraBean;
 import com.swaca.model.OrdenCompra;
 import com.swaca.model.SolicitudCompra;
+import com.swaca.util.DateTimeUtil;
 
 @Service
 public class ordenCompraDaoImplement implements ordenCompraDao{
@@ -22,6 +23,8 @@ public class ordenCompraDaoImplement implements ordenCompraDao{
 	@PersistenceContext
 	private EntityManager em;
 
+	DateTimeUtil convertDATE = new DateTimeUtil();
+	
 	@Transactional
 	@Override
 	public OrdenCompra createOrden(OrdenCompra orden) {
@@ -85,7 +88,6 @@ public class ordenCompraDaoImplement implements ordenCompraDao{
 			ordencompraBean.setFechaEmitida(ordenCompra.get(i).getFechaEmitida());
 			ordencompraBean.setNombreProveedor(ordenCompra.get(i).getIdProveedor().getRazonSocial());
 			listordenCompraBean.add(ordencompraBean);
-			System.out.println("##"+ordenCompra.get(i).getIdProveedor().getRazonSocial());
 		}
 		
 		return listordenCompraBean;
@@ -100,7 +102,8 @@ public class ordenCompraDaoImplement implements ordenCompraDao{
 		OrdenCompra ordenCompra = new OrdenCompra();
 		ordenCompra = (OrdenCompra)query.getSingleResult();
 		ordenBean.setDireccionEntrega(ordenCompra.getDireccionEntrega());
-		ordenBean.setFechaEmitida(ordenCompra.getFechaEmitida());
+		String dateTime = convertDATE.dateTimeMYSQL(ordenCompra.getFechaEmitida());
+		ordenBean.setFecha(dateTime);
 		ordenBean.setIdOrdenCompra(ordenCompra.getIdOrdenCompra());
 		ordenBean.setIGV(ordenCompra.getIGV());
 		ordenBean.setObservaciones(ordenCompra.getObservaciones());

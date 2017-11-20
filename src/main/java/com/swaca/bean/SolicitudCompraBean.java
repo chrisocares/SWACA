@@ -25,14 +25,6 @@ public class SolicitudCompraBean {
 		this.idSolicitudCompra = idSolicitudCompra;
 	}
 
-	public Date getFechaRegistro() {
-		return fechaRegistro;
-	}
-
-	public void setFechaRegistro(Date fechaRegistro) {
-		this.fechaRegistro = fechaRegistro;
-	}
-
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -47,14 +39,6 @@ public class SolicitudCompraBean {
 
 	public void setCodigoTiendaSolicitud(Integer codigoTiendaSolicitud) {
 		this.codigoTiendaSolicitud = codigoTiendaSolicitud;
-	}
-
-	public Date getFechaEntrega() {
-		return fechaEntrega;
-	}
-
-	public void setFechaEntrega(Date fechaEntrega) {
-		this.fechaEntrega = fechaEntrega;
 	}
 
 	public estadoSolicitudCompra getEstado() {
@@ -106,16 +90,31 @@ public class SolicitudCompraBean {
 		this.fechaRegistro1 = fechaRegistro1;
 	}
 
+	public String getFechaEntrega() {
+		return fechaEntrega;
+	}
+
+	public void setFechaEntrega(String fechaEntrega) {
+		this.fechaEntrega = fechaEntrega;
+	}
+
+	public String getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(String fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
 
 	private Integer idSolicitudCompra;
 
-	private Date fechaRegistro;
+	private String fechaRegistro;
 
 	private String descripcion;
 
 	private Integer codigoTiendaSolicitud;
 
-	private Date fechaEntrega;
+	private String fechaEntrega;
 
 	private estadoSolicitudCompra estado;
 

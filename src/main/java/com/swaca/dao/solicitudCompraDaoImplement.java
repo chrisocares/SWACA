@@ -16,12 +16,15 @@ import com.swaca.model.SolicitudCompra;
 import com.swaca.model.Usuario;
 import com.swaca.model.detalleSolicitudCompra;
 import com.swaca.model.estadoSolicitudCompra;
+import com.swaca.util.DateTimeUtil;
 
 @Service
 public class solicitudCompraDaoImplement implements solicitudCompraDao{
 
 	@PersistenceContext 
 	EntityManager em;
+	
+	DateTimeUtil convertDATE = new DateTimeUtil();
 	
 	@Transactional
 	@Override
@@ -57,18 +60,14 @@ public class solicitudCompraDaoImplement implements solicitudCompraDao{
 		String querySQL = "SELECT e FROM SolicitudCompra e JOIN e.estado a WHERE a.idEstado="+idEstado;
 		Query query = em.createQuery(querySQL);
 		solicitud = query.getResultList();
-		Calendar cal = Calendar.getInstance();
 		for(int i=0;i<solicitud.size();i++){
 			SolicitudCompraBean solicitudBean = new SolicitudCompraBean();
 			solicitudBean.setDescripcion(solicitud.get(i).getDescripcion());
 			solicitudBean.setIdSolicitudCompra(solicitud.get(i).getIdSolicitudCompra());
-			Integer mes = solicitud.get(i).getFechaRegistro().getMonth()+1;
-			System.out.println("$"+solicitud.get(i).getFechaRegistro().getYear());
-			System.out.println("#"+solicitud.get(i).getFechaRegistro().getDate()+" / "+mes.toString()+" / "+solicitud.get(i).getFechaRegistro().getYear());
-			String fecha = solicitud.get(i).getFechaRegistro().getDay()+" / "+solicitud.get(i).getFechaRegistro().getMonth()+" / "+solicitud.get(i).getFechaRegistro().getYear();
-			solicitudBean.setFechaRegistro1(fecha);
-			solicitudBean.setFechaRegistro(solicitud.get(i).getFechaRegistro());
-			solicitudBean.setFechaEntrega(solicitud.get(i).getFechaEntrega());
+			String dateTime = convertDATE.dateTimeMYSQL(solicitud.get(i).getFechaRegistro());
+			solicitudBean.setFechaRegistro1(dateTime);
+			String dateFechaEntrega = convertDATE.dateTimeMYSQL(solicitud.get(i).getFechaEntrega());
+			solicitudBean.setFechaEntrega(dateFechaEntrega);
 			solicitudBean.setDescripcionEstado(solicitud.get(i).getEstado().getDescripcion());
 			solicitudBean.setDescripcionTienda(solicitud.get(i).getIdUsuario().getIdTienda().getDescripcion());
 			listsolicitud.add(solicitudBean);
@@ -108,8 +107,10 @@ public class solicitudCompraDaoImplement implements solicitudCompraDao{
 			SolicitudCompraBean solicitudBean = new SolicitudCompraBean();
 			solicitudBean.setDescripcion(solicitud.get(i).getDescripcion());
 			solicitudBean.setIdSolicitudCompra(solicitud.get(i).getIdSolicitudCompra());
-			solicitudBean.setFechaRegistro(solicitud.get(i).getFechaRegistro());
-			solicitudBean.setFechaEntrega(solicitud.get(i).getFechaEntrega());
+			String dateFechaRegistro = convertDATE.dateTimeMYSQL(solicitud.get(i).getFechaRegistro());
+			solicitudBean.setFechaRegistro(dateFechaRegistro);
+			String dateFechaEntrega = convertDATE.dateTimeMYSQL(solicitud.get(i).getFechaEntrega());
+			solicitudBean.setFechaEntrega(dateFechaEntrega);
 			solicitudBean.setDescripcionEstado(solicitud.get(i).getEstado().getDescripcion());
 			solicitudBean.setDescripcionTienda(solicitud.get(i).getIdUsuario().getIdTienda().getDescripcion());
 			listsolicitud.add(solicitudBean);

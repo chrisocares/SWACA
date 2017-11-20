@@ -121,6 +121,14 @@ public class ordenCompraBean {
 		this.correoProveedor = correoProveedor;
 	}
 	
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+	
 	private Proveedor idProveedor;
 
 	private Integer idOrdenCompra;
@@ -139,6 +147,8 @@ public class ordenCompraBean {
 
 	private Date fechaEmitida;
 
+	private String fecha; 
+	
 	private Collection<detalleXorden> detallexorden;
 
 	private String nombreProveedor;

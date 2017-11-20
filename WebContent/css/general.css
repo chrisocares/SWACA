@@ -31,3 +31,9 @@ body{
 .fa{
 	padding:0px !important;
 }
+
+.iconTableCenter {
+	font-size: 25px !important;
+	padding-left: 10px !important;
+    margin-top: 6px;
+}

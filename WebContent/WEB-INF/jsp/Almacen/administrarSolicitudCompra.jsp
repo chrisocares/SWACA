@@ -195,7 +195,7 @@
         </div>
     </div>  
 <div class="modal fade" id="detallexsolicitudModal"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog cascading-modal" role="document">
+    <div class="modal-dialog cascading-modal" role="document" style="width:644px !important;">
         <!--Content-->
         <div class="modal-content">
             <!--Header-->
@@ -290,7 +290,6 @@
             <!--/.Content-->
         </div>
     </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="plugins/jquery/jquery-3.2.1.js"></script>
 <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="plugins/mdl/material.min.js"></script>
@@ -307,6 +306,7 @@ var idProveedorO;
 var numeroOrden;
 var idSolicitudSeleccionadobtnVer; 
 var idRemover;
+var selOtroProducto;
 $(document).ready(function() {
 	
 	$('#txtBienvenido').text("Administrar Solicitudes de Compra");
@@ -573,12 +573,10 @@ function initSelectDetallebySolicitud(idSolicitud){
  			$.each (detallesolicitudes , function (i ,detallesolicitud){
  	 			var data = detallesolicitud.descripcion +" - " +detallesolicitud.nombreProducto;
  	 			$('#muestraDetallesSolicitud tbody').append(
-	 					//'<tr id="trmuestraDetalle-'+detallesolicitud.idDetalleSolicitudCompra+'"><td style="text-align:left"">'+detallesolicitud.nombreProducto+'</td>'+
 	 					'<tr id="trmuestraDetalle-'+detallesolicitud.idDetalleSolicitudCompra+'"><td style="text-align:left"">'+
-	        			'<select class="select" id="selectOtroProducto" name="ds">'+
-			  			'<option value="init">Seleccione un Producto ...</option>'+
+	        			'<select disabled class="form-control form-control-sm selectOtroProducto" id="selectOtroProducto-'+detallesolicitud.idDetalleSolicitudCompra+'" name="ds" style="width:220px">'+
+			  			'<option value="init" selected>'+detallesolicitud.nombreProducto+'</option>'+
 						'</select>'
-	 					//detallesolicitud.nombreProducto
 	 					+'</td>'+
 	 					'<td style="text-align:left">'+detallesolicitud.descripcion+'</td>'+
 	 					'<td style="text-align:left"><input id="inputCantidad-'+detallesolicitud.idDetalleSolicitudCompra+'"readonly class="text-center" type="number" min="0" value="'+detallesolicitud.cantidad+'"></td>'+
@@ -607,6 +605,7 @@ $(document).on('click','.btnmodifyDetalleSolicitud',function(e){
 		document.getElementById("saveCantidadDetalleSolicitud-"+idModificarCantidad).style.display = 'block';
 		$("#inputCantidad-"+idModificarCantidad).attr("readonly", false);
 		initSelectOtroProducto();
+		$('#selectOtroProducto-'+idModificarCantidad).prop('disabled',false);
 });  
 $(document).on('click','.btnremoveDetalleSolicitud',function(e){
 	idModificarCantidad=this.id.slice(23,this.id.length);
@@ -627,11 +626,14 @@ $('#aceptardeleteItemDetalleSolicitud').click(function() {
 $(document).on('click','.btnmodifyCantidad',function(e){
 	idModificarCantidad=this.id.slice(29,this.id.length);
 	var can = $('#inputCantidad-'+idModificarCantidad).val();
-	updateCantidad(can);
+	updateCantidad(can,selOtroProducto);
+	document.getElementById(this.id).style.display = 'none';
+	document.getElementById("modifyDetalleSolicitud-"+idModificarCantidad).style.display = 'block';
+
 });
-function updateCantidad(cantidad){
+function updateCantidad(cantidad,idProducto){
 	$.ajax({
- 		url: 'updateCantidadDetalle-'+idModificarCantidad+'-'+cantidad,
+ 		url: 'updateCantidadDetalle-'+idModificarCantidad+'-'+cantidad+'-'+idProducto,
  		type: 'post',
  		dataType: 'json',
  		data: '',
@@ -668,12 +670,22 @@ function initSelectOtroProducto(){
  		success: function(productos){
  		    $.each(productos, function(i, producto) {	
  		    	var data=producto.nombreLista;
- 		    	$('#selectOtroProducto').append('<option id="select2_'+producto.idProducto+'" value="'+producto.idProducto+'">'+data+'</option>');
+ 		    	$('#selectOtroProducto-'+idModificarCantidad).append('<option id="select2_'+producto.idProducto+'" value="'+producto.idProducto+'">'+data+'</option>');
  		    });
  			}
  		});		
 }
 
+$(document).on('change', '.selectOtroProducto', function() {
+	    
+		var selected = $("#selectOtroProducto-"+idModificarCantidad+" option:selected").val();
+	    console.log(selected);
+	    if(selected == "init"){
+	    	selOtroProducto = "Empty";
+	    }else{
+	    	selOtroProducto = selected;
+	    }
+});
 </script>
 </body>
 </html>

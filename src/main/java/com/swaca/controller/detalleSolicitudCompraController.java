@@ -79,9 +79,9 @@ public class detalleSolicitudCompraController {
 		return detalleSolicitudBean;
 	}
 	
-	@RequestMapping(value="updateCantidadDetalle-{idSolicitudDetalle}-{cantidad}" , method = RequestMethod.POST)
-	public void updateCantidad (@PathVariable("idSolicitudDetalle") Integer idDetalle , @PathVariable("cantidad")Integer cantidad){
-		detalleDao.updateCantidad(idDetalle, cantidad);
+	@RequestMapping(value="updateCantidadDetalle-{idSolicitudDetalle}-{cantidad}-{idProducto}" , method = RequestMethod.POST)
+	public void updateCantidad (@PathVariable("idSolicitudDetalle") Integer idDetalle , @PathVariable("cantidad")Integer cantidad , @PathVariable ("idProducto") String idProducto){
+		detalleDao.updateCantidad(idDetalle, cantidad , idProducto);
 	}
 	
 	@RequestMapping(value="updateCantidadRegistradaDetalle-{idSolicitudDetalle}-{cantidad}" , method = RequestMethod.POST)

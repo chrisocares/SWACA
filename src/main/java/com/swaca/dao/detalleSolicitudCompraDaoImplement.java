@@ -155,11 +155,18 @@ public class detalleSolicitudCompraDaoImplement implements detalleSolicitudCompr
 
 	@Transactional
 	@Override
-	public void updateCantidad(Integer idSolicitudDetalle,Integer cantidad) {
+	public void updateCantidad(Integer idSolicitudDetalle,Integer cantidad ,String idProducto) {
 		detalleSolicitudCompra detalle = new detalleSolicitudCompra(); 
-		String sql = "UPDATE detalleSolicitudCompra set cantidad="+cantidad.toString()+" where idDetalleSolicitudCompra="+idSolicitudDetalle.toString();
-		Query query = em.createQuery(sql);
-		query.executeUpdate();
+		if(idProducto.equals("Empty")){
+			String sql = "UPDATE detalleSolicitudCompra set cantidad="+cantidad.toString()+ "where idDetalleSolicitudCompra="+idSolicitudDetalle.toString();
+			Query query = em.createQuery(sql);
+			query.executeUpdate();
+		}else{
+			String sql = "UPDATE detalleSolicitudCompra set cantidad="+cantidad.toString()+", idProducto="+idProducto+" where idDetalleSolicitudCompra="+idSolicitudDetalle.toString();
+			Query query = em.createQuery(sql);
+			query.executeUpdate();
+		}
+		
 	}
 	
 	@Transactional

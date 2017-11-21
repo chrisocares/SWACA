@@ -13,7 +13,7 @@ public interface detalleSolicitudCompraDao {
 	List<detalleSolicitudCompraBean> listSolicitudesbyProveedor(Integer idProveedor);
 	detalleSolicitudCompraBean getByIdDetalleSolicitud(Integer idDetalleSolicitud);
 	List<detalleSolicitudCompraBean> listSolicitudesbySolicitud(Integer idSolicitud);
-	void updateCantidad(Integer idSolicitudDetalle , Integer Cantidad);
+	void updateCantidad(Integer idSolicitudDetalle , Integer Cantidad , String idProducto);
 	void updateCantidadRegistrada(Integer idSolicitudDetalle , Integer Cantidad);
 	void updateEstado(Integer idSolicitudDetalle , Integer idEstado);
 }

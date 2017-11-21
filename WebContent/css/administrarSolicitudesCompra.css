@@ -46,8 +46,14 @@ table th{
 }	
 .btn .fa.fa-sm {
     font-size: 1rem;
-    margin-top: -5px;
+    margin-top: -3px;
 }
 .btnGroupAction{
 	margin-right:5px;
+}
+#TableDetalleOrdenCompra_length select{
+	    height: 33px !important; 
+}
+.m-l-15{
+	margin-left:15px !important;
 }

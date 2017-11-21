@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SWACA - Admin. Solicitud de Compra</title>
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Fira+Sans|Roboto:300,400|Questrial|Satisfy">
-<link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="plugins/MDB/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="plugins/mdl/material.min.css" type="text/css">
 <link rel="stylesheet" href="plugins/MDB/css/mdb.min.css" type="text/css">
 <link rel="stylesheet" href="plugins/select2/css/select2.min.css" type="text/css">
@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="css/administrarSolicitudesCompra.css" type="text/css">
 <link rel="stylesheet" href="css/general.css" type="text/css">
 <link rel="stylesheet" href="plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
 	  <jsp:include page="../Almacen/PageMasterAlmacen.jsp"></jsp:include>
@@ -37,37 +38,27 @@
 		    		<div id="datosOrdenCompra" class="col-sm-12" style="border:1px solid">
 		    				<h5><b>Observaciones</b></h5>
 		    				<p>${ordenCompraBean.observaciones}</p>
-			    			<div class="form-group">
-			    				<div class="col-sm-6">
+			    			<div class="row">
+			    				<div class="col">
 			    					<h5><b>Fecha Elaborada</b></h5>
 			    					<p id="txtFechaElaborada"></p>
 			    				</div>
-			    				<div class="col-sm-6">
+			    				<div class="col">
 			    					<h5><b>Dirección de entrega</b></h5>
 			    					<p id="txtDireccion"></p>
 			    				</div>
 			    			</div>
-			    			<div class="form-group">
-			    				<div class="col-sm-6">
+			    			<div class="row">
+			    				<div class="col">
 			    					<h5><b>Proveedor</b></h5>
 			    					<p id="txtProveedor"></p>
 			    				</div>
-			    				<div class="col-sm-6">
+			    				<div class="col">
 			    					<h5><b>Estado de Orden de Compra</b></h5>
 			    					<p id="txtEstadoOC"></p>
 			    				</div>
 			    			</div>
 		    			</div>
-		    			<div id="actionOrdenCompra" class="container">
-		    				<div class="btn-group container m-t-15" role="group" aria-label="Basic example">
-							    <button type="button" class="btn btn-outline-mdb-color waves-effect" onclick="verOrden()"><i class="fa fa-file-text-o  fa-sm pr-2 btnGroupAction" aria-hidden="true"></i> Ver Orden de Compra</button>							   
-							    <button type="button" class="btn btn-outline-mdb-color waves-effect" onclick="generarReporte()"><i class="fa fa-file-pdf-o  fa-sm pr-2 btnGroupAction" aria-hidden="true"></i>Generar PDF</button>
-							    <button type="button" class="btn btn-outline-mdb-color waves-effect" onclick="enviarEmail()"><i class="fa fa-envelope-o fa-sm pr-2 btnGroupAction" aria-hidden="true"></i>Enviar Proveedor</button>
-								<button id="btnCerrarOrden" type="button" class="btn btn-outline-mdb-color waves-effect" onclick="cerrarOrden()"><i class="fa fa-check fa-sm pr-2 btnGroupAction" aria-hidden="true"></i>Finalizar</button>
-								<button type="button" class="btn btn-outline-mdb-color waves-effect" id="BtnLOG"><i class="fa fa-history fa-sm pr-2 btnGroupAction" aria-hidden="true"></i>Historial</button>
-							</div>
-		    			</div>
-		    			<button type="button" class="btnListInventario btn btn-info" data-toggle="modal" data-target="#listInventarioFisico">REGISTRAR INVENTARIO </button>
 		    			<div class="container m-t-15" id="tableDetallesxOrden">
 		    			<table id="TableDetalleOrdenCompra" class="table table-striped table-bordered table-responsive" cellspacing="0" width="100%">
 							    <thead>
@@ -86,12 +77,12 @@
 							    </thead>
 						    <tbody>
 						    </tbody>
-						</table>
+						    </table>
 		    			</div>
 		    		</div>
 		    	</div>
 		    </div>
-            <!--/.Content-->
+		    <!--/.Content-->
         </div>
     </div>
     <div class="modal fade" id="ModalExito" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -127,7 +118,6 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title"> Movimientos de la Orden de Compra</h4>
         </div>
         <div class="modal-body">
@@ -187,16 +177,17 @@
     </div>
 </div>  
 </div>
+<script src="plugins/MDB/js/popper.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="plugins/jquery/jquery-3.2.1.js"></script>
-<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/MDB/js/bootstrap.min.js"></script>
 <script src="plugins/mdl/material.min.js"></script>
 <script src="plugins/MDB/js/mdb.min.js"></script>
-<script src="plugins/MDB/js/popper.min.js"></script>
 <script src="plugins/select2/js/select2.min.js"></script>
 <script src="plugins/datepicker/js/bootstrap-datepicker.js"></script>
 <script src="plugins/js/jquery.dataTables.min.js"></script>
 <script src="plugins/js/dataTables.bootstrap4.min.js"></script>
+
 <script>
 var Total;
 var arrayListos = [];
@@ -208,10 +199,27 @@ var correoProveedor;
 tableLOG = $('#tableLOG').DataTable();
 tableDetallesS = $('#TableDetalleOrdenCompra').DataTable();
 $(document).ready(function(){
+	$('.dropdown-toggle').dropdown()
 	initSelect();
 	$('#datosOrdenCompra').css('display','none');
 	$('#actionOrdenCompra').css('display','none');
 	$('#tableDetallesxOrden').css('display','none');
+	$('#TableDetalleOrdenCompra_length label').after('<button type="button" class="m-l-15 btnListInventario btn btn-info" data-toggle="modal" data-target="#listInventarioFisico"><i class="fa fa-pencil-square-o fa-sm pr-2"></i> REGISTRAR INVENTARIO </button>');
+	$('.btnListInventario').after('<button id="btnCerrarOrden" type="button" class="btn btn-danger" onclick="cerrarOrden()"><i class="fa fa-check fa-sm pr-2 btnGroupAction" aria-hidden="true"></i>Finalizar</button>');
+    $('#btnCerrarOrden').after(
+		    '<button id="btnprueba" class="m-l-15 btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-text-o fa-sm pr-2"></i> Orden de Compra</button>'+
+		    '<div class="dropdown-menu">'+
+		        '<a class="dropdown-item" href="#" onclick="verOrden()"><i class="fa fa-file-text-o fa-sm pr-2" style="color:black;margin-right:7px;"></i>Ver Orden</a>'+
+		        '<div class="dropdown-divider"></div>'+
+		        '<a class="dropdown-item" href="#" onclick="generarReporte()"><i class="fa fa-file-pdf-o  fa-sm pr-2 " style="color:black;margin-right:7px;"></i>Generar PDF</a>'+
+		        '<div class="dropdown-divider"></div>'+
+		        '<a class="dropdown-item" href="#" onclick="enviarEmail()"><i class="fa fa-envelope-o  fa-sm pr-2 " style="color:black;margin-right:7px;"></i>Enviar Orden</a>'+
+		    '</div>'
+		    );
+   $('#TableDetalleOrdenCompra_wrapper div:first-child div:first-child').removeClass("col-md-6").addClass("col-md-9");
+   $('#TableDetalleOrdenCompra_wrapper div:first-child div:last-child').removeClass("col-md-6").addClass("col-md-3");
+   $('#TableDetalleOrdenCompra_length').removeClass("col-md-9");
+   $('#TableDetalleOrdenCompra_length').addClass("col-md-12");
 });
 
 $('#selectOrdenCompra').select2().on("change", function(e) {
@@ -236,7 +244,7 @@ function initSelect(){
  		data: '',
  		success: function(listordenCompra){
 	 		    $.each(listordenCompra, function(i, item) {	 
-	 		      	$('#selectOrdenCompra').append('<option id="select2OrdenCompra_'+item.idOrdenCompra+'" value="'+item.idOrdenCompra+'">'+'Orden #'+item.idOrdenCompra+" - "+item.nombreProveedor+" , "+item.fechaEmitida+'</option>');
+	 		      	$('#selectOrdenCompra').append('<option id="select2OrdenCompra_'+item.idOrdenCompra+'" value="'+item.idOrdenCompra+'">'+'Orden #'+item.idOrdenCompra+" - "+item.nombreProveedor+" , "+item.fecha+'</option>');
 	 		    });
  			}
  		});
@@ -374,7 +382,7 @@ $(document).on('click','.btnListInventario',function(e){
  			$.each (detallesolicitudes , function (i ,detallesolicitud){
   	 			$('#listInventarioFisico tbody').append(
 	 					'<tr><td style="text-align:left">'+detallesolicitud.nombreProducto+'</td>'+
-	 					'<td style="text-align:center"><input style="width:35%" value="'+detallesolicitud.cantidad+'" readonly class="text-center" type="number"> / <input style="width:35%" id="inputCantidad-'+detallesolicitud.idDetalleSolicitudCompra+'"readonly class="text-center" type="number" min="0" max="'+detallesolicitud.cantidad+'" value="'+detallesolicitud.cantidadRegistrada+'"></td>'+
+	 					'<td style="text-align:center"><input style="width:50%" value="'+detallesolicitud.cantidad+'" readonly class="text-center" type="number"> / <input style="width:50%" id="inputCantidad-'+detallesolicitud.idDetalleSolicitudCompra+'"readonly class="text-center" type="number" min="0" max="'+detallesolicitud.cantidad+'" value="'+detallesolicitud.cantidadRegistrada+'"></td>'+
 	 					'<td style="text-align:left">'+
 	 					'<button  id="modifyDetalleSolicitud-'+detallesolicitud.idDetalleSolicitudCompra+'" class="btnmodifyDetalleSolicitud mdl-button mdl-js-button mdl-button--icon">'+
 						'<i class="fa fa-cog"></i>'+

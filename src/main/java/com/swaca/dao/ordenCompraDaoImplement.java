@@ -85,7 +85,8 @@ public class ordenCompraDaoImplement implements ordenCompraDao{
 			ordenCompraBean ordencompraBean = new ordenCompraBean();
 			ordencompraBean.setIdOrdenCompra(ordenCompra.get(i).getIdOrdenCompra());
 			ordencompraBean.setObservaciones(ordenCompra.get(i).getObservaciones());
-			ordencompraBean.setFechaEmitida(ordenCompra.get(i).getFechaEmitida());
+			String dateTime = convertDATE.dateTimeMYSQL(ordenCompra.get(i).getFechaEmitida());
+			ordencompraBean.setFecha(dateTime);
 			ordencompraBean.setNombreProveedor(ordenCompra.get(i).getIdProveedor().getRazonSocial());
 			listordenCompraBean.add(ordencompraBean);
 		}

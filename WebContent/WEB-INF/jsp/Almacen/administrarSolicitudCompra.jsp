@@ -308,7 +308,7 @@ var numeroOrden;
 var idSolicitudSeleccionadobtnVer; 
 var idRemover;
 $(document).ready(function() {
-
+	
 	$('#txtBienvenido').text("Administrar Solicitudes de Compra");
     tableSolicitudes = $('#TableSolicitudes').DataTable();
     tableDetallesS = $('#TableDetallesSolicitudes').DataTable();
@@ -573,7 +573,13 @@ function initSelectDetallebySolicitud(idSolicitud){
  			$.each (detallesolicitudes , function (i ,detallesolicitud){
  	 			var data = detallesolicitud.descripcion +" - " +detallesolicitud.nombreProducto;
  	 			$('#muestraDetallesSolicitud tbody').append(
-	 					'<tr id="trmuestraDetalle-'+detallesolicitud.idDetalleSolicitudCompra+'"><td style="text-align:left"">'+detallesolicitud.nombreProducto+'</td>'+
+	 					//'<tr id="trmuestraDetalle-'+detallesolicitud.idDetalleSolicitudCompra+'"><td style="text-align:left"">'+detallesolicitud.nombreProducto+'</td>'+
+	 					'<tr id="trmuestraDetalle-'+detallesolicitud.idDetalleSolicitudCompra+'"><td style="text-align:left"">'+
+	        			'<select class="select" id="selectOtroProducto" name="ds">'+
+			  			'<option value="init">Seleccione un Producto ...</option>'+
+						'</select>'
+	 					//detallesolicitud.nombreProducto
+	 					+'</td>'+
 	 					'<td style="text-align:left">'+detallesolicitud.descripcion+'</td>'+
 	 					'<td style="text-align:left"><input id="inputCantidad-'+detallesolicitud.idDetalleSolicitudCompra+'"readonly class="text-center" type="number" min="0" value="'+detallesolicitud.cantidad+'"></td>'+
 	 					'<td style="text-align:left">'+
@@ -600,6 +606,7 @@ $(document).on('click','.btnmodifyDetalleSolicitud',function(e){
 		document.getElementById(this.id).style.display = 'none';
 		document.getElementById("saveCantidadDetalleSolicitud-"+idModificarCantidad).style.display = 'block';
 		$("#inputCantidad-"+idModificarCantidad).attr("readonly", false);
+		initSelectOtroProducto();
 });  
 $(document).on('click','.btnremoveDetalleSolicitud',function(e){
 	idModificarCantidad=this.id.slice(23,this.id.length);
@@ -651,6 +658,21 @@ $('#aceptardeleteSolicitud').click(function() {
 	buildTableSolicitudes();
 	
 });
+
+function initSelectOtroProducto(){
+	$.ajax({
+ 		url: 'getProductos',
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(productos){
+ 		    $.each(productos, function(i, producto) {	
+ 		    	var data=producto.nombreLista;
+ 		    	$('#selectOtroProducto').append('<option id="select2_'+producto.idProducto+'" value="'+producto.idProducto+'">'+data+'</option>');
+ 		    });
+ 			}
+ 		});		
+}
 
 </script>
 </body>

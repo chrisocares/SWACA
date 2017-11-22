@@ -97,5 +97,9 @@ public class ordenCompraController {
 		return orden;
 	}
 	
+	@RequestMapping(value="updateEstadoOrdenCompra-{idOrdenCompra}-{idEstado}" , method = RequestMethod.POST)
+	public void updateEstadoOrdenCompra (@PathVariable("idOrdenCompra") String idOrdenCompra , @PathVariable("idEstado")String idEstado){
+		ordenDao.updateEstado(idOrdenCompra, idEstado);
+	}
 
 }

@@ -14,4 +14,5 @@ public interface ordenCompraDao {
 	ordenCompraBean getOrdenbyId (String idOrden);
 	List<ordenCompraBean> listOrdenesCompra(String idEstado);
 	String getnumeroOrden();
+	void updateEstado(String idOrden , String idestado);
 }

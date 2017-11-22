@@ -16,7 +16,7 @@
 	    <span class="mdl-layout-title">Eliga una Opción</span>
 	    <nav class="mdl-navigation">
 	      <a class="mdl-navigation__link" href="tosolicitudCompra">Generar Solicitud de Productos</a>
-	      <a class="mdl-navigation__link" href="">Link</a>
+	      <a class="mdl-navigation__link" href="toAlmacen">Ver Almacén</a>
 	      <a class="mdl-navigation__link" href="">Link</a>
 	      <a class="mdl-navigation__link" href="">Link</a>
 	    </nav>

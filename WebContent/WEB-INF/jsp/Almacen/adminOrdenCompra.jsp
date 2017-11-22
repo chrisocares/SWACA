@@ -177,6 +177,36 @@
     </div>
 </div>  
 </div>
+    <div class="modal fade" id="finalizarOrdenCompraMODAL" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-notify modal-danger" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <p class="heading lead">Cerrar Orden de Compra</p>
+    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+    
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                        <p>Estas seguro de cerrar esta Orden de compra ? si selecciona aceptar ya no se podra editar la orden.</p>
+                    </div>
+                </div>
+    
+                <!--Footer-->
+                <div class="modal-footer justify-content-center">
+                    <a type="button" class="btn btn-primary-modal" onclick="cerrarOrden()">Aceptar <i class="fa fa-check ml-1"></i></a>
+                    <a type="button" class="btn btn-outline-secondary-modal waves-effect" data-dismiss="modal">Cerrar</a>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
 <script src="plugins/MDB/js/popper.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="plugins/jquery/jquery-3.2.1.js"></script>
@@ -205,7 +235,7 @@ $(document).ready(function(){
 	$('#actionOrdenCompra').css('display','none');
 	$('#tableDetallesxOrden').css('display','none');
 	$('#TableDetalleOrdenCompra_length label').after('<button type="button" class="m-l-15 btnListInventario btn btn-info" data-toggle="modal" data-target="#listInventarioFisico"><i class="fa fa-pencil-square-o fa-sm pr-2"></i> REGISTRAR INVENTARIO </button>');
-	$('.btnListInventario').after('<button id="btnCerrarOrden" type="button" class="btn btn-danger" onclick="cerrarOrden()"><i class="fa fa-check fa-sm pr-2 btnGroupAction" aria-hidden="true"></i>Finalizar</button>');
+	$('.btnListInventario').after('<button id="btnCerrarOrden" data-toggle="modal" data-target="#finalizarOrdenCompraMODAL" type="button" class="btn btn-danger" ><i class="fa fa-check fa-sm pr-2 btnGroupAction" aria-hidden="true"></i>Finalizar</button>');
     $('#btnCerrarOrden').after(
 		    '<button id="btnprueba" class="m-l-15 btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-text-o fa-sm pr-2"></i> Orden de Compra</button>'+
 		    '<div class="dropdown-menu">'+
@@ -307,9 +337,6 @@ function poblarCamposxOrden(select_val){
 	 	 		}else if (Total = Listos){
 	 	 			$('#btnCerrarOrden').prop("disabled", false);
 	 	 		}
-	 	 		console.log("T"+Total);
-	 	 		console.log("L"+Listos);
-	 	 		console.log("P"+Pendientes);
  			}
  		});	
 }
@@ -427,6 +454,19 @@ $("#listInventarioFisico").on("hide.bs.modal", function () {
 	tableDetallesS.clear().draw();
 	poblarCamposxOrden(select_val);
 });
+
+function cerrarOrden(){
+	$.ajax({
+ 		url: 'updateEstadoOrdenCompra-'+select_val+'-2',
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		success: function(){
+ 			}
+ 		});
+	$('#myLargeModal').modal('toggle');
+	location.reload();
+}
 </script>
 </body>
 </html>

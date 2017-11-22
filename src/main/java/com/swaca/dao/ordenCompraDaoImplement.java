@@ -15,6 +15,7 @@ import com.swaca.bean.SolicitudCompraBean;
 import com.swaca.bean.ordenCompraBean;
 import com.swaca.model.OrdenCompra;
 import com.swaca.model.SolicitudCompra;
+import com.swaca.model.detalleSolicitudCompra;
 import com.swaca.util.DateTimeUtil;
 
 @Service
@@ -114,5 +115,13 @@ public class ordenCompraDaoImplement implements ordenCompraDao{
 		ordenBean.setNombreestado(ordenCompra.getEstado().getDescripcion());
 		ordenBean.setCorreoProveedor(ordenCompra.getIdProveedor().getEmail());
 		return ordenBean;
+	}
+
+	@Override
+	@Transactional
+	public void updateEstado(String idOrden, String idestado) {
+		String sql = "UPDATE OrdenCompra set estado="+idestado+" where idOrdenCompra="+idOrden;
+		Query query = em.createQuery(sql);
+		query.executeUpdate();
 	}
 }

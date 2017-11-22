@@ -156,7 +156,6 @@ public class detalleSolicitudCompraDaoImplement implements detalleSolicitudCompr
 	@Transactional
 	@Override
 	public void updateCantidad(Integer idSolicitudDetalle,Integer cantidad ,String idProducto) {
-		detalleSolicitudCompra detalle = new detalleSolicitudCompra(); 
 		if(idProducto.equals("Empty")){
 			String sql = "UPDATE detalleSolicitudCompra set cantidad="+cantidad.toString()+ "where idDetalleSolicitudCompra="+idSolicitudDetalle.toString();
 			Query query = em.createQuery(sql);
@@ -172,7 +171,6 @@ public class detalleSolicitudCompraDaoImplement implements detalleSolicitudCompr
 	@Transactional
 	@Override
 	public void updateCantidadRegistrada(Integer idSolicitudDetalle,Integer cantidad) {
-		detalleSolicitudCompra detalle = new detalleSolicitudCompra(); 
 		String sql = "UPDATE detalleSolicitudCompra set cantidadRegistrada="+cantidad.toString()+" where idDetalleSolicitudCompra="+idSolicitudDetalle.toString();
 		Query query = em.createQuery(sql);
 		query.executeUpdate();
@@ -181,7 +179,6 @@ public class detalleSolicitudCompraDaoImplement implements detalleSolicitudCompr
 	@Transactional
 	@Override
 	public void updateEstado(Integer idSolicitudDetalle, Integer idEstado) {
-		detalleSolicitudCompra detalle = new detalleSolicitudCompra(); 
 		String sql = "UPDATE detalleSolicitudCompra set estado="+idEstado.toString()+" where idDetalleSolicitudCompra="+idSolicitudDetalle.toString();
 		Query query = em.createQuery(sql);
 		query.executeUpdate();

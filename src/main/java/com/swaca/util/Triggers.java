@@ -64,10 +64,21 @@ BEGIN
     SET idSolicitud := old.id_solicitud_compra;
     UPDATE solicitud_compra set estado_solicitud_compra = 2 WHERE id_solicitud_compra=idSolicitud;
     END IF;
+    IF ( old.cantidad > new.cantidad_registrada AND new.estado_detalle = 4) THEN 
+    set new.estado_detalle= 4;
+    END IF;
 END
 |
 DELIMITER ;
  * 
- * 
+ ********************************************************************************************************************************
+ *
+ *
+ *CREATE TRIGGER `UPDATE_ANULADO_CASCADA_SC` BEFORE UPDATE ON `solicitud_compra`
+ FOR EACH ROW BEGIN 
+IF(NEW.estado_solicitud_compra = 3)THEN
+UPDATE detalle_solicitud_compra set estado_detalle = 7 where id_solicitud_compra=old.id_solicitud_compra;
+END IF;
+END 
  */
 }

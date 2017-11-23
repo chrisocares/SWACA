@@ -109,7 +109,7 @@
 	        		</div>
 	        	</div>
 	        </div>
-        	<div class="md-form" style="width:100%">
+        	<div class="md-form" style="width:100%" id="divOculto1">
         		<div>
 				    <textarea type="text"  id="txtobservaciones" class="md-textarea"></textarea>
 				    <label for="form7">Observaciones</label>
@@ -427,9 +427,13 @@ $('#selectProveedor').select2().on("change", function(e) {
     if(select_val=='init'){
     	tableDetallesS.clear().draw();
     	$('#afterSelect').hide();
+    	$('#divOculto1').hide();
+    	$('#TableDetallesSolicitudes').hide();
     }else{
         idProveedorO = select_val;
     	$('#afterSelect').show();
+    	$('#divOculto1').show();
+    	$('#TableDetallesSolicitudes').show();
         setDatosProveedor(select_val);
     	tableDetallesS.clear();
     	buildTableDetallesxProveedor(select_val);

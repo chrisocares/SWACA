@@ -71,8 +71,7 @@ public class Producto {
 	
 	@Column(name="fechaModificado")
 	private Date fechaModificado;
-	
-	
+
 	public Integer getIdProducto() {
 		return idProducto;
 	}

@@ -17,23 +17,6 @@
 <link rel="stylesheet" href="css/general.css" type="text/css">
 </head>
 <body>
-	  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-		  <header class="mdl-layout__header">
-			  <div class="mdl-layout__header-row">
-		      <span class="mdl-layout-title" id="txtBienvenido"></span>
-		      </div>
-		      <div class="mdl-layout-spacer"></div>
-		  </header>
-		  <div class="mdl-layout__drawer">
-		    <span class="mdl-layout-title">Elija una Opcion</span>
-		    <nav class="mdl-navigation">
-		      <a class="mdl-navigation__link" href="toAdministrarSolicitudCompra">Solicitudes de Compra</a>
-		      <a class="mdl-navigation__link" href="toAdministrarOrdenCompra">Orden de Compra</a>
-		      <a class="mdl-navigation__link" href="">Ver Mi Almacen - VMA</a>
-		    </nav>
-		  </div>
-		  <main class="mdl-layout__content">
-		    <div class="page-content"><!-- Your content goes here -->
 				<div class="container" id="administrarSolicitudesContainer">
 		    		<div style="background-color: #E3F0EB; padding: 20px 0px 20px 0px;">
 			    		<div class="p-20" style="padding-left: 50px;">
@@ -71,33 +54,15 @@
 							<table id="TableProductoEnCamino" class="table table-striped table-bordered table-responsive" cellspacing="0" width="100%">
 						        <thead>
 						        	<tr style="background-color: #7EEEC1;">
-							            <th>#</th>
 							            <th>Producto</th>
 							            <th>Categoria</th>
 							            <th>Proveedor</th>
 							            <th>Fecha Registro</th>
-							            <th>Precio Venta</th>
 							            <th>Cantidad</th>
 							            <th>Estado</th>
-							            <th>Actualizar</th>
 							        </tr>
 						        </thead>
 						        <tbody>
-						        	<tr>
-							            <td>1</td>
-							            <td>marca+modelo+banda+color</td>
-							            <td>Smartphone</td>
-							            <td>Bitel</td>
-							            <td>2017/12/18</td>
-							            <td>2500.00</td>
-							            <td>32</td>
-							            <td align="center"><select style="width: 100px; height: 23px;">
-									          <option value="1">Habilitado</option>
-									          <option value="2">aaaaa</option>
-									          <option value="3">bbbbb</option>
-									        </select></td>
-							        <td><button type="button" class="btn btn-primary" style="height: 40px;" data-toggle="modal" data-target="#dModal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>actualizar</button></td>
-							        </tr>
 						        </tbody>
 							</table>
 						</div>
@@ -105,33 +70,15 @@
 							<table id="TableProductoStockActual" class="table table-striped table-bordered table-responsive" cellspacing="0" width="100%">
 						        <thead>
 						        	<tr style="background-color: #7EEEC1;">
-							            <th>#</th>
-							            <th>Codigo</th>
 							            <th>Producto</th>
+							            <th>Categoria</th>
 							            <th>Proveedor</th>
-							            <th>Fecha</th>
-							            <th>Descripcion</th>
+							            <th>Fecha Registro</th>
 							            <th>Cantidad</th>
-							            <th>Precio Total</th>
 							            <th>Estado</th>
 							        </tr>
 						        </thead>
 						        <tbody>
-						        	<tr>
-							            <td>1</td>
-							            <td>000059</td>
-							            <td>marca+modelo+banda+color</td>
-							            <td>Bitel</td>
-							            <td>2017/12/24</td>
-							            <td>Nos falta</td>
-							            <td>5</td>
-							            <td>11000.00</td>
-							            <td align="center"><select style="width: 100px; height: 23px;">
-									          <option value="1">Pendiente</option>
-									          <option value="2">aaaaa</option>
-									          <option value="3">bbbbb</option>
-									        </select></td>
-							        </tr>
 						        </tbody>
 							</table>
 						</div>
@@ -230,38 +177,19 @@
 	                			<div class="col-lg-6">
 	                				<div class="group"> 
 	                					<label>Código del Producto</label> 
-<select class="js-example-basic-single" name="state">
-  <option value="AL">Alabama</option>
-    ...
-  <option value="WY">Wyoming</option>
-</select>
-<Hr>	
-<label>Código de la Tienda</label> 
-<select class="js-example-basic-single" name="state">
-  <option value="AL">Alabama</option>
-    ...
-  <option value="WY">Wyoming</option>
-</select>
-<Hr>
-<label style="margin-bottom: 22px;">Fecha Actual</label> 
-<script>
-var today = new Date();
-var dd = today.getDate();
-var mm = today.getMonth()+1; //January is 0!
-var yyyy = today.getFullYear();
+										<select class="js-example-basic-single" name="state">
+										  <option value="AL">Alabama</option>
+										  <option value="WY">Wyoming</option>
+										</select>
+										<Hr>	
+										<label>Código de la Tienda</label> 
+										<select class="js-example-basic-single" name="state">
+										  <option value="AL">Alabama</option>
+										  <option value="WY">Wyoming</option>
+										</select>
+										<Hr>
+										<label style="margin-bottom: 22px;">Fecha Actual</label> 
 
-if(dd<10) {
-    dd = '0'+dd
-} 
-
-if(mm<10) {
-    mm = '0'+mm
-} 
-
-today = mm + '/' + dd + '/' + yyyy;
-document.write(today);
-
-</script>
 								    </div>
 	                			</div>
 	                			<div class="col-lg-6" style="text-align: center; padding-top: 17px;">
@@ -343,13 +271,79 @@ document.write(today);
 <script>
 $('#txtBienvenido').text("Administrar Productos");
 $('.select').select2();
-$('#TableProductoEnCamino').DataTable();
-$('#TableProductoStockActual').DataTable();
-
-
 $(document).ready(function() {
     $('.js-example-basic-single').select2();
+    tablePendiente = $('#TableProductoEnCamino').DataTable();
+    tableStock = $('#TableProductoStockActual').DataTable();
+    var estado1 = "STOCK";
+    var estado2 = "PENDIENTE";
+    initTableS(estado2);
+    initTableP(estado1);
 });
+
+function initTableP(estado){
+	$.ajax({
+ 		url: 'getList-'+estado,
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		async:false,
+ 		success: function(almacen){
+ 			$.each (almacen , function (i ,item){
+		var categoria ; 
+		var nombreProducto;
+		var proveedor;
+ 				$.ajax({
+ 			 		url: 'getByIdDetalleSolicitud-'+item.idDetalle,
+ 			 		type: 'post',
+ 			 		dataType: 'json',
+ 			 		data: '',
+ 			 		async:false,
+ 			 		success: function(dato){
+ 			 			nombreProducto = dato.nombreProducto;
+ 			 			proveedor = dato.nombreProveedor;
+ 			 			categoria = dato.descripcionCategoria;
+ 			 		}
+ 			 	});
+ 				
+ 				tablePendiente.row.add([nombreProducto,categoria,proveedor,'',item.cantidadRegistrada,item.estado,]).draw(false);
+ 				});
+ 			}
+ 		});
+}
+
+function initTableS(estado){
+	$.ajax({
+ 		url: 'getList-'+estado,
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		async:false,
+ 		success: function(almacen){
+ 			$.each (almacen , function (i ,item){
+		var categoria ; 
+		var nombreProducto;
+		var proveedor;
+ 				$.ajax({
+ 			 		url: 'getByIdDetalleSolicitud-'+item.idDetalle,
+ 			 		type: 'post',
+ 			 		dataType: 'json',
+ 			 		data: '',
+ 			 		async:false,
+ 			 		success: function(dato){
+ 			 			nombreProducto = dato.nombreProducto;
+ 			 			proveedor = dato.nombreProveedor;
+ 			 			categoria = dato.descripcionCategoria;
+ 			 		}
+ 			 	});
+ 				
+ 				tableStock.row.add([nombreProducto,categoria,proveedor,'',item.cantidadRegistrada,item.estado,]).draw(false);
+ 				});
+ 			}
+ 		});
+}
+
+
 </script>
 
 </body>

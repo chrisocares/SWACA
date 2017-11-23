@@ -66,6 +66,7 @@ public class DetallexOrdenDaoImplement implements DetallexOrdenDao{
 			Double total = precioCompraProducto * cant;
 			detalleSolicitud.setPrecioTotal(total);
 			detalleSolicitud.setEstado(listdetallexorden.get(i).getDetallecompra().getEstado().getDescripcion());
+			detalleSolicitud.setCodigoProveedorProducto(listdetallexorden.get(i).getDetallecompra().getIdProducto().getCodProductoProveedor());
 			listdetalleSolicitudBean.add(detalleSolicitud);
 		}
 		return listdetalleSolicitudBean;

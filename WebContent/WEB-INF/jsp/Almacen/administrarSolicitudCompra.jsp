@@ -122,6 +122,7 @@
 				            <th>N° Detalle Solicitud</th>
 				            <th>N° Solicitud de Compra</th>
 				            <th>Cantidad</th>
+				            <th>UM</th>
 				            <th>Producto</th>
 				            <th>Descripcion</th>
 				            <th>Fecha de Registro</th> 
@@ -407,7 +408,7 @@ function buildTableDetallesxProveedor(idProveedor){
  	 		}else{
  			$.each (detallesolicitudes , function (i ,detallesolicitud){
  				tableDetallesS.row.add([detallesolicitud.idDetalleSolicitudCompra,detallesolicitud.codigo,detallesolicitud.cantidad
- 				        				,detallesolicitud.nombreProducto,detallesolicitud.descripcion,detallesolicitud.fecha,'S/.'+detallesolicitud.precioTotal,
+ 				        				,detallesolicitud.unidadMedida,detallesolicitud.nombreProducto,detallesolicitud.descripcion,detallesolicitud.fecha,'S/.'+detallesolicitud.precioTotal,
  				        				'<button  id="addOrden-'+detallesolicitud.idDetalleSolicitudCompra+'" class="btnAddOrden mdl-button mdl-js-button mdl-button--icon">'+
  										'<i class="glyphicon glyphicon-plus"></i>'+
  										'</button>'+

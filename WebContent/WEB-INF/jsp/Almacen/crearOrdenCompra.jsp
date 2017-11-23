@@ -84,8 +84,7 @@
 					<table id="TableSolicitudes" class="table table-striped table-bordered table-responsive" cellspacing="0" width="100%">
 					    <thead>
 					        <tr>
-					            <th>DETALLE DE SOLICITUD</th>
-					            <th>SOLICITUD DE COMPRA</th>
+					            <th>N° PROD. PROVEEDOR</th>
 					            <th>DESCRIPCIÓN</th>
 					            <th>PRODUCTO</th>
 					            <th>UM</th>
@@ -96,8 +95,7 @@
 					    </thead>
 					    <tfoot>
 					        <tr>
-					            <th>DETALLE DE SOLICITUD</th>
-					            <th>SOLICITUD DE COMPRA</th>
+					            <th>N° PROD. PROVEEDOR</th>
 					            <th>DESCRIPCIÓN</th>
 					            <th>PRODUCTO</th>
 					            <th>UM</th>
@@ -162,8 +160,8 @@ function buildTable(idOrden){
  	 		}else{
  	 	 		console.log(detallexorden);
  			$.each (detallexorden , function (i ,detalle){
- 				tableDetallesS.row.add([detalle.idDetalleSolicitudCompra,detalle.idSolicitud,detalle.descripcion
- 				        				,detalle.nombreProducto,'${ordenCompra.idProveedor.tipoMoneda}',detalle.cantidad,detalle.fechaRegistro,'S/.'+detalle.precioTotal,
+ 				tableDetallesS.row.add([detalle.codigoProveedorProducto,detalle.descripcion
+ 				        				,detalle.nombreProducto,'${ordenCompra.idProveedor.tipoMoneda}',detalle.cantidad,detalle.fecha,'S/.'+detalle.precioTotal,
  				        				]).draw(false);
 	 				});
 	 	 		}

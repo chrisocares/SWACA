@@ -102,6 +102,8 @@ public class detalleSolicitudCompraDaoImplement implements detalleSolicitudCompr
 			Double cantidad = (double)detallesolicitudCompra.get(i).getCantidad();
 			Double precioTotal = precio * cantidad;
 			detallesolicitudCompraBean.setPrecioTotal(precioTotal);
+			detallesolicitudCompraBean.setUnidadMedida(detallesolicitudCompra.get(i).getIdProducto().getUnidadMedida());
+			detallesolicitudCompraBean.setCodigoProveedorProducto(detallesolicitudCompra.get(i).getIdProducto().getCodProductoProveedor());
 			listsolicitud.add(detallesolicitudCompraBean);
 		}
 		
@@ -119,6 +121,15 @@ public class detalleSolicitudCompraDaoImplement implements detalleSolicitudCompr
 		Double cantidad = (double)detalle.getCantidad();
 		Double precioTotal = precio * cantidad;
 		detalleSolicitud.setPrecioTotal(precioTotal);
+		detalleSolicitud.setCantidadRegistrada(detalle.getCantidadRegistrada());
+		String nombreProducto = detalle.getIdProducto().getIdMarca().getDescripcionMarca()+
+				" "+detalle.getIdProducto().getModelo()+" "+detalle.getIdProducto().getColor()+
+				" "+detalle.getIdProducto().getBanda();
+		detalleSolicitud.setNombreProducto(nombreProducto);
+		detalleSolicitud.setCodigo(detalle.getIdSolicitudCompra().getIdUsuario().getIdTienda().getIdTienda());
+		detalleSolicitud.setIdDetalleSolicitudCompra(detalle.getIdDetalleSolicitudCompra());
+		detalleSolicitud.setDescripcionCategoria(detalle.getIdProducto().getIdCategoria().getDescripcionCategoria());
+		detalleSolicitud.setNombreProveedor(detalle.getIdProducto().getIdProveedor().getNombreComercial());
 		return detalleSolicitud;
 	}
 

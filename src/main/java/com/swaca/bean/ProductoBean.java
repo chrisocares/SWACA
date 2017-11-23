@@ -147,5 +147,15 @@ public class ProductoBean {
 	public void setNombreLista(String nombreLista) {
 		this.nombreLista = nombreLista;
 	}
+	
+	private String codigProductoProveedor;
+
+	public String getCodigProductoProveedor() {
+		return codigProductoProveedor;
+	}
+
+	public void setCodigProductoProveedor(String codigProductoProveedor) {
+		this.codigProductoProveedor = codigProductoProveedor;
+	}
 
 }

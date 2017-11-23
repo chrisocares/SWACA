@@ -151,4 +151,43 @@ public class detalleSolicitudCompraBean {
 	
 	private Integer cantidadRegistrada;
 
+	public String getNombreProveedor() {
+		return nombreProveedor;
+	}
+
+	public void setNombreProveedor(String nombreProveedor) {
+		this.nombreProveedor = nombreProveedor;
+	}
+
+	public String getDescripcionCategoria() {
+		return descripcionCategoria;
+	}
+
+	public void setDescripcionCategoria(String descripcionCategoria) {
+		this.descripcionCategoria = descripcionCategoria;
+	}
+
+	private String nombreProveedor ;
+	
+	private String descripcionCategoria;
+	
+	private String unidadMedida;
+
+	public String getUnidadMedida() {
+		return unidadMedida;
+	}
+
+	public void setUnidadMedida(String unidadMedida) {
+		this.unidadMedida = unidadMedida;
+	}
+	
+	private String codigoProveedorProducto;
+
+	public String getCodigoProveedorProducto() {
+		return codigoProveedorProducto;
+	}
+
+	public void setCodigoProveedorProducto(String codigoProveedorProducto) {
+		this.codigoProveedorProducto = codigoProveedorProducto;
+	}
 }

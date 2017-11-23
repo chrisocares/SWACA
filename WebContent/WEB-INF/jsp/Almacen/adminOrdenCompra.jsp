@@ -73,6 +73,7 @@
 							            <th>Total</th>
 							            <th></th>
 							            <th></th>
+							            <th></th>
 							        </tr>
 							    </thead>
 						    <tbody>
@@ -103,6 +104,35 @@
                     <div class="text-center">
                         <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
                         <p id="mensajeModalRegistro">La orden de Compra fue enviada al proveedor con correo : <b id="correoProveedorMSG"></b> y asunto : <b id="asuntoMSG"></b></p>
+                    </div>
+                </div>
+    
+                <!--Footer-->
+                <div class="modal-footer justify-content-center">
+                    <a type="button" class="btn btn-outline-secondary-modal waves-effect" data-dismiss="modal">Aceptar</a>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+        <div class="modal fade" id="ModalTransferencia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-notify modal-warning" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <p class="heading lead">Transferencia a Almacen Exitosa</p>
+    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+    
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
+                        <p id="mensajeModalRegistro">Se descargaron la cantidad registrada al almacén.</p>
                     </div>
                 </div>
     
@@ -312,7 +342,9 @@ function poblarCamposxOrden(select_val){
  	 				                     	'<button  data-toggle="modal" data-target="#LOG" id="log-'+detalle.idDetalleSolicitudCompra+'" class="btnLOG mdl-button mdl-js-button mdl-button--icon">'+
   											'<i class="fa fa-history fa-sm pr-2"></i>'+
   											'</button>',
- 	 				                        '<i class="fa fa-check-square-o iconTableCenter" style="color:green"></i>'
+ 	 				                        '<i class="fa fa-check-square-o iconTableCenter" style="color:green"></i>',
+ 	 										'<button id="trasnferir-'+detalle.idDetalleSolicitudCompra+'" class="btnTransferir mdl-button mdl-js-button mdl-button--icon">'+
+ 	 										'<i class="fa fa-exchange iconTableCenter" style="color:red"></i></button>'
  	 				        				]).draw(false);
  	 				var arreglo ={row1: detalle.idDetalleSolicitudCompra};
  	 				arrayListos.push(arreglo);
@@ -322,7 +354,9 @@ function poblarCamposxOrden(select_val){
  				                      '<button  data-toggle="modal" data-target="#LOG" id="log-'+detalle.idDetalleSolicitudCompra+'" class="btnLOG mdl-button mdl-js-button mdl-button--icon">'+
  										'<i class="fa fa-history fa-sm pr-2"></i>'+
  										'</button>',
- 										'<i class="fa fa-road iconTableCenter" style="color:red"></i>'
+ 										'<i class="fa fa-road iconTableCenter" style="color:red"></i>',
+ 										'<button id="trasnferir-'+detalle.idDetalleSolicitudCompra+'" class="btnTransferir mdl-button mdl-js-button mdl-button--icon">'+
+ 										'<i class="fa fa-exchange iconTableCenter" style="color:red"></i></button>'
  				        				]).draw(false);
 	 				var arreglo ={row1: detalle.idDetalleSolicitudCompra};
  	 				arrayPendientes.push(arreglo);
@@ -439,6 +473,12 @@ $(document).on('click','.btnmodifyCantidad',function(e){
 	updateCantidad(can);
 });
 
+$(document).on('click','.btnTransferir',function(e){
+	idTransferir=this.id.slice(11,this.id.length);
+	transferirAlmacen(idTransferir);
+	$('#ModalTransferencia').modal('toggle');
+});
+
 function updateCantidad(cantidad){
 	$.ajax({
  		url: 'updateCantidadRegistradaDetalle-'+idModificarCantidad+'-'+cantidad,
@@ -466,6 +506,69 @@ function cerrarOrden(){
  		});
 	$('#myLargeModal').modal('toggle');
 	location.reload();
+}
+
+function transferirAlmacen(variableID){
+	var cantidadTransferida ;
+	var Producto;
+	var idTienda;
+	var idDetalle;
+	var fecha;
+	var existe;
+	$.ajax({
+ 		url: 'getByIdDetalleSolicitud-'+variableID,
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		async: false,
+ 		success: function(data){
+ 			Producto = data.nombreProducto;
+ 			idTienda = data.codigo;
+ 			cantidadTransferida = data.cantidadRegistrada;
+ 			idDetalle = data.idDetalleSolicitudCompra;
+ 			console.log(Producto+"-"+idTienda+"-"+cantidadTransferida+"-"+idDetalle);
+ 			}
+ 		});
+	$.ajax({
+ 		url: 'validarExiste-'+idDetalle,
+ 		type: 'post',
+ 		dataType: 'json',
+ 		data: '',
+ 		async: false,
+ 		success: function(numero){
+ 			console.log("#"+numero);
+	 			if(numero>0){
+	 				existe = "TRUE";
+	 				console.log(numero);
+	 			}else{
+	 				existe = "FALSE";
+	 			}
+ 			}
+ 		});	
+	if(existe=="TRUE"){
+		console.log("ENTRA AL UPDATE");
+		$.ajax({
+	 		url: 'updateAlmacen-'+idDetalle+'-'+cantidadTransferida,
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		async: false,
+	 		success: function(){
+	  			}
+	 		});
+	}else if(existe=="FALSE"){
+		$.ajax({
+	 		url: 'crearAlmacen-'+cantidadTransferida+'-'+idDetalle+'-'+idTienda,
+	 		type: 'post',
+	 		dataType: 'json',
+	 		data: '',
+	 		async: false,
+	 		success: function(){
+	  			}
+	 		});
+	}
+
+	
 }
 </script>
 </body>

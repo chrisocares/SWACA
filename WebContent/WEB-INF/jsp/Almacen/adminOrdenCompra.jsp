@@ -268,7 +268,7 @@ $('#selectOrdenCompra').select2().on("change", function(e) {
   
 function initSelect(){
 	$.ajax({
- 		url: 'listOrdenCompra-1',
+ 		url: 'listOrdenCompra-5',
  		type: 'post',
  		dataType: 'json',
  		data: '',

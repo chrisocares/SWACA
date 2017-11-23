@@ -11,9 +11,8 @@
 	    <span class="mdl-layout-title">Eliga una Opción</span>
 	    <nav class="mdl-navigation">
 	      <a class="mdl-navigation__link" href="toAdministrarSolicitudCompra">Solicitudes de Compra</a>
-	      <a class="mdl-navigation__link" href="toAdministrarOrdenCompra">Orden de Compra</a>
-	      <a class="mdl-navigation__link" href="">Link</a>
-	      <a class="mdl-navigation__link" href="">Link</a>
+	      <a class="mdl-navigation__link" href="toMisOrdenesCompra">Mis Ordenes de Compras </a>
+	      <a class="mdl-navigation__link" href="toAdministrarOrdenCompra">Administrar Orden de Compra</a>
 	    </nav>
 	  </div>
 	  <!--  

@@ -374,7 +374,7 @@ function buildTableSolicitudes(){
  		data: '',
  		success: function(solicitudesCompra){
  			$.each (solicitudesCompra , function (i ,solicitudCompra){
- 				console.log(solicitudCompra.fechaEntrega1);
+ 				
  				tableSolicitudes.row.add([solicitudCompra.idSolicitudCompra,solicitudCompra.descripcionTienda,solicitudCompra.descripcion,
  				              solicitudCompra.fechaRegistro1,solicitudCompra.fechaEntrega,solicitudCompra.descripcionEstado,
  				              '<button  id="verSolicitud-'+solicitudCompra.idSolicitudCompra+'" data-toggle="modal" data-target="#detallexsolicitudModal" class="btnVerSolicitud mdl-button mdl-js-button mdl-button--icon">'+

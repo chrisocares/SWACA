@@ -9,6 +9,15 @@ import com.swaca.model.detalleXorden;
 import com.swaca.model.estadoOrdenCompra;
 
 public class ordenCompraBean {
+	
+	public String getEmitente() {
+		return Emitente;
+	}
+
+	public void setEmitente(String emitente) {
+		Emitente = emitente;
+	}
+	
 	public Integer getIdOrdenCompra() {
 		return idOrdenCompra;
 	}
@@ -128,6 +137,14 @@ public class ordenCompraBean {
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
+
+	public String getEstadoDescripcion() {
+		return estadoDescripcion;
+	}
+
+	public void setEstadoDescripcion(String estadoDescripcion) {
+		this.estadoDescripcion = estadoDescripcion;
+	}
 	
 	private Proveedor idProveedor;
 
@@ -158,6 +175,10 @@ public class ordenCompraBean {
 	private estadoOrdenCompra estado;
 	
 	private String correoProveedor;
+	
+	private String Emitente;
+	
+	private String estadoDescripcion;
 
 }
 

@@ -57,15 +57,16 @@ BEFORE UPDATE ON detalle_solicitud_compra
 FOR EACH ROW
 BEGIN
     DECLARE idSolicitud INT;
-	IF ( old.cantidad = new.cantidad_registrada) THEN
+	IF ( old.cantidad = new.cantidad_registrada AND old.estado_detalle = 4) THEN
 	set new.estado_detalle= 5;
+    ELSEIF (old.estado_detalle = 4 AND old.cantidad > new.cantidad_registrada ) THEN
+    set new.estado_detalle= 4;
+    ELSEIF (old.estado_detalle = 5 AND old.cantidad > new.cantidad_registrada) THEN
+    set new.estado_detalle= 4;
     END IF;
 	IF ( new.estado_detalle = 2) THEN
     SET idSolicitud := old.id_solicitud_compra;
     UPDATE solicitud_compra set estado_solicitud_compra = 2 WHERE id_solicitud_compra=idSolicitud;
-    END IF;
-    IF ( old.cantidad > new.cantidad_registrada AND new.estado_detalle = 4) THEN 
-    set new.estado_detalle= 4;
     END IF;
 END
 |

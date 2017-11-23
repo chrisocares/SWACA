@@ -58,7 +58,7 @@ public class emailController {
     	 multipart.addBodyPart(messageBodyPart);
     	 message.setContent(multipart);
     	 Transport t = session.getTransport("smtp");
-         t.connect("chrisocares@gmail.com", "");
+         t.connect("swaca001@gmail.com", "swaca01urp");
          t.sendMessage(message, message.getAllRecipients());
          t.close();
     	 System.out.println("Orden de Compra enviada exitosamente....");

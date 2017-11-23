@@ -16,6 +16,7 @@ import com.swaca.bean.ordenCompraBean;
 import com.swaca.model.OrdenCompra;
 import com.swaca.model.SolicitudCompra;
 import com.swaca.model.detalleSolicitudCompra;
+import com.swaca.model.estadoOrdenCompra;
 import com.swaca.util.DateTimeUtil;
 
 @Service
@@ -29,7 +30,9 @@ public class ordenCompraDaoImplement implements ordenCompraDao{
 	@Transactional
 	@Override
 	public OrdenCompra createOrden(OrdenCompra orden) {
-		
+		estadoOrdenCompra obj = new estadoOrdenCompra();
+		obj.setIdEstado(1);
+		orden.setEstado(obj);
 		orden.setDireccionEntrega(orden.getDireccionEntrega());
 		orden.setFechaEmitida(orden.getFechaEmitida());
 		orden.setIdUsuario(orden.getIdUsuario());
@@ -89,6 +92,9 @@ public class ordenCompraDaoImplement implements ordenCompraDao{
 			String dateTime = convertDATE.dateTimeMYSQL(ordenCompra.get(i).getFechaEmitida());
 			ordencompraBean.setFecha(dateTime);
 			ordencompraBean.setNombreProveedor(ordenCompra.get(i).getIdProveedor().getRazonSocial());
+			String emisor =ordenCompra.get(i).getIdUsuario().getNombre()+" "+ordenCompra.get(i).getIdUsuario().getApellido();
+			ordencompraBean.setEmitente(emisor);
+			ordencompraBean.setEstadoDescripcion(ordenCompra.get(i).getEstado().getDescripcion());
 			listordenCompraBean.add(ordencompraBean);
 		}
 		

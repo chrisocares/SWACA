@@ -40,6 +40,11 @@ public class ordenCompraController {
 		return "Almacen/adminOrdenCompra";
 	}
 	
+	@RequestMapping("toMisOrdenesCompra")
+	public String toMisOrdenesCompra(){
+		return "Almacen/misOrdenesCompra";
+	}
+	
 	ParseStringToDate parseSTD = new ParseStringToDate();
 	
 	@RequestMapping(value="createOrdenCompra-{direccionEntrega}-{fechaEmitida}-{idUsuario}-{subTotal}-{Total}-{observaciones}-{idProveedor}" , method = RequestMethod.POST)

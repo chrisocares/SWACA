@@ -17,8 +17,6 @@
 	    <nav class="mdl-navigation">
 	      <a class="mdl-navigation__link" href="tosolicitudCompra">Generar Solicitud de Productos</a>
 	      <a class="mdl-navigation__link" href="toAlmacen">Ver Almacén</a>
-	      <a class="mdl-navigation__link" href="">Link</a>
-	      <a class="mdl-navigation__link" href="">Link</a>
 	    </nav>
 	  </div>
 	  <!--  

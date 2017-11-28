@@ -277,13 +277,14 @@ $(document).ready(function() {
     tableStock = $('#TableProductoStockActual').DataTable();
     var estado1 = "STOCK";
     var estado2 = "PENDIENTE";
+    var variableTienda = '${Usuario.idTienda.idTienda}';
     initTableS(estado2);
-    initTableP(estado1);
+    initTableP(estado1,variableTienda);
 });
 
-function initTableP(estado){
+function initTableP(estado,tienda){
 	$.ajax({
- 		url: 'getList-'+estado,
+ 		url: 'getList-'+estado+'-'+tienda,
  		type: 'post',
  		dataType: 'json',
  		data: '',

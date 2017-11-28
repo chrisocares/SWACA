@@ -29,6 +29,7 @@ $(document).ready(function() {
 	var nombre = '${pageContext.session.getAttribute("Nombres")}';
 	var rol = '${pageContext.session.getAttribute("Rol")}';
 	$('#txtBienvenido').text("Bienvenido "+nombre+" - "+rol+" - "+tienda);
+
 });
 </script>
 </body>

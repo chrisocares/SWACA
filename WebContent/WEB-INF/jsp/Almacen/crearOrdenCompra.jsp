@@ -161,7 +161,7 @@ function buildTable(idOrden){
  	 	 		console.log(detallexorden);
  			$.each (detallexorden , function (i ,detalle){
  				tableDetallesS.row.add([detalle.codigoProveedorProducto,detalle.descripcion
- 				        				,detalle.nombreProducto,'${ordenCompra.idProveedor.tipoMoneda}',detalle.cantidad,detalle.fecha,'S/.'+detalle.precioTotal,
+ 				        				,detalle.nombreProducto,detalle.unidadMedida,detalle.cantidad,detalle.fecha,'S/.'+detalle.precioTotal,
  				        				]).draw(false);
 	 				});
 	 	 		}

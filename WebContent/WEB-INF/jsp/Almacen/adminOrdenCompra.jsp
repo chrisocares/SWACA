@@ -288,10 +288,12 @@ $('#selectOrdenCompra').select2().on("change", function(e) {
     	$('#datosOrdenCompra').css('display','none');
     	$('#actionOrdenCompra').css('display','none');
     	$('#tableDetallesxOrden').css('display','none');
+    	tableDetallesS.clear().draw();
     }else{
     	$('#datosOrdenCompra').css('display','block');
     	$('#actionOrdenCompra').css('display','block');
     	$('#tableDetallesxOrden').css('display','block');
+    	tableDetallesS.clear().draw();
     	poblarCamposxOrden(select_val);
     }
   });
@@ -337,7 +339,7 @@ function poblarCamposxOrden(select_val){
  	 		}else{
  			$.each (detallexorden , function (i ,detalle){
  				if(detalle.estado=="TOTALMENTE ATENDIDO"){
- 	 				tableDetallesS.row.add([detalle.idSolicitud,detalle.nombreProducto,"",detalle.descripcion
+ 	 				tableDetallesS.row.add([detalle.idSolicitud,detalle.nombreProducto,detalle.unidadMedida,detalle.descripcion
  	 				                        ,detalle.fecha,detalle.estado,detalle.cantidad,'S/.'+detalle.precioTotal,
  	 				                     	'<button  data-toggle="modal" data-target="#LOG" id="log-'+detalle.idDetalleSolicitudCompra+'" class="btnLOG mdl-button mdl-js-button mdl-button--icon">'+
   											'<i class="fa fa-history fa-sm pr-2"></i>'+
@@ -349,7 +351,7 @@ function poblarCamposxOrden(select_val){
  	 				var arreglo ={row1: detalle.idDetalleSolicitudCompra};
  	 				arrayListos.push(arreglo);
  				}else{
- 				tableDetallesS.row.add([detalle.idSolicitud,detalle.nombreProducto,"",detalle.descripcion
+ 				tableDetallesS.row.add([detalle.idSolicitud,detalle.nombreProducto,detalle.unidadMedida,detalle.descripcion
  				                       ,detalle.fecha,detalle.estado,detalle.cantidad,'S/.'+detalle.precioTotal,
  				                      '<button  data-toggle="modal" data-target="#LOG" id="log-'+detalle.idDetalleSolicitudCompra+'" class="btnLOG mdl-button mdl-js-button mdl-button--icon">'+
  										'<i class="fa fa-history fa-sm pr-2"></i>'+
@@ -440,19 +442,51 @@ $(document).on('click','.btnListInventario',function(e){
  		dataType: 'json',
  		data: '',
  		success: function(detallesolicitudes){
+ 	 		
  			$.each (detallesolicitudes , function (i ,detallesolicitud){
-  	 			$('#listInventarioFisico tbody').append(
-	 					'<tr><td style="text-align:left">'+detallesolicitud.nombreProducto+'</td>'+
-	 					'<td style="text-align:center"><input style="width:50%" value="'+detallesolicitud.cantidad+'" readonly class="text-center" type="number"> / <input style="width:50%" id="inputCantidad-'+detallesolicitud.idDetalleSolicitudCompra+'"readonly class="text-center" type="number" min="0" max="'+detallesolicitud.cantidad+'" value="'+detallesolicitud.cantidadRegistrada+'"></td>'+
-	 					'<td style="text-align:left">'+
-	 					'<button  id="modifyDetalleSolicitud-'+detallesolicitud.idDetalleSolicitudCompra+'" class="btnmodifyDetalleSolicitud mdl-button mdl-js-button mdl-button--icon">'+
-						'<i class="fa fa-cog"></i>'+
-						'</button>'+
-	 					'<button  id="saveCantidadDetalleSolicitud-'+detallesolicitud.idDetalleSolicitudCompra+'" class="btnmodifyCantidad mdl-button mdl-js-button mdl-button--icon" style="display:none">'+
-						'<i class="fa fa-floppy-o"></i>'+
-						'</button>'+
-	 					'</td>'+
-	 					'</tr>');
+ 				console.log("$%"+detallesolicitud.codigo);
+ 				if(detallesolicitud.codigo=="1"){
+ 	 				var cantidadMinimaRegistrada ; 
+ 	 				
+ 	 				$.ajax({
+ 	 			 		url: 'getAlmacenByIdDetalle-'+detallesolicitud.idDetalleSolicitudCompra,
+ 	 			 		type: 'post',
+ 	 			 		dataType: 'json',
+ 	 			 		data: '',
+ 	 			 		async: false,
+ 	 			 		success: function(data){
+ 	 			 			cantidadMinimaRegistrada = data.cantidadRegistrada;
+ 	 			 			}
+ 	 			 		});
+	 			 	console.log(cantidadMinimaRegistrada);
+ 	  	 			$('#listInventarioFisico tbody').append(
+ 		 					'<tr><td style="text-align:left">'+detallesolicitud.nombreProducto+'</td>'+
+ 		 					'<td style="text-align:center"><input style="width:50%" value="'+detallesolicitud.cantidad+'" readonly class="text-center" type="number"> / <input style="width:50%" id="inputCantidad-'+detallesolicitud.idDetalleSolicitudCompra+'"readonly class="text-center" type="number" min="'+cantidadMinimaRegistrada+'" max="'+detallesolicitud.cantidad+'" value="'+detallesolicitud.cantidadRegistrada+'"></td>'+
+ 		 					'<td style="text-align:left">'+
+ 		 					'<button  id="modifyDetalleSolicitud-'+detallesolicitud.idDetalleSolicitudCompra+'" class="btnmodifyDetalleSolicitud mdl-button mdl-js-button mdl-button--icon">'+
+ 							'<i class="fa fa-cog"></i>'+
+ 							'</button>'+
+ 		 					'<button  id="saveCantidadDetalleSolicitud-'+detallesolicitud.idDetalleSolicitudCompra+'" class="btnmodifyCantidad mdl-button mdl-js-button mdl-button--icon" style="display:none">'+
+ 							'<i class="fa fa-floppy-o"></i>'+
+ 							'</button>'+
+ 		 					'</td>'+
+ 		 					'</tr>');
+ 	 			}else{
+ 	  	 			$('#listInventarioFisico tbody').append(
+ 		 					'<tr><td style="text-align:left">'+detallesolicitud.nombreProducto+'</td>'+
+ 		 					'<td style="text-align:center"><input style="width:50%" value="'+detallesolicitud.cantidad+'" readonly class="text-center" type="number"> / <input style="width:50%" id="inputCantidad-'+detallesolicitud.idDetalleSolicitudCompra+'"readonly class="text-center" type="number" min="0" max="'+detallesolicitud.cantidad+'" value="'+detallesolicitud.cantidadRegistrada+'"></td>'+
+ 		 					'<td style="text-align:left">'+
+ 		 					'<button  id="modifyDetalleSolicitud-'+detallesolicitud.idDetalleSolicitudCompra+'" class="btnmodifyDetalleSolicitud mdl-button mdl-js-button mdl-button--icon">'+
+ 							'<i class="fa fa-cog"></i>'+
+ 							'</button>'+
+ 		 					'<button  id="saveCantidadDetalleSolicitud-'+detallesolicitud.idDetalleSolicitudCompra+'" class="btnmodifyCantidad mdl-button mdl-js-button mdl-button--icon" style="display:none">'+
+ 							'<i class="fa fa-floppy-o"></i>'+
+ 							'</button>'+
+ 		 					'</td>'+
+ 		 					'</tr>');
+ 	 	 			}
+	 				
+
  					});
 	 	 		}
  		});
@@ -504,6 +538,13 @@ function cerrarOrden(){
  		success: function(){
  			}
  		});
+
+	for(var i = 0 ; i<arrayListos.length ; i++){
+		var id = arrayListos[i].row1;
+		transferirAlmacen(id);
+	}
+	
+	
 	$('#myLargeModal').modal('toggle');
 	location.reload();
 }
@@ -567,6 +608,7 @@ function transferirAlmacen(variableID){
 	  			}
 	 		});
 	}
+	
 
 	
 }

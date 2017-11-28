@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.swaca.bean.ProveedorBean;
 import com.swaca.bean.almacenTiendaBean;
+import com.swaca.bean.detalleSolicitudCompraBean;
 import com.swaca.dao.AlmacenTiendaDao;
 import com.swaca.model.AlmacenTienda;
 
@@ -47,11 +48,19 @@ public class almacenController {
 		almacenDao.UpdateAlmacen(idDetalle, cantidad);
 	}
 	
-	@RequestMapping(value= "getList-{estado}" , method = RequestMethod.POST)
+	@RequestMapping(value= "getList-{estado}-{idTienda}" , method = RequestMethod.POST)
 	@ResponseBody
-	public List<almacenTiendaBean> getListProveedor (@PathVariable("estado")String estado){
+	public List<almacenTiendaBean> getConsultarMiAlmacen (@PathVariable("estado")String estado,@PathVariable("idTienda")String idTienda){
 		List<almacenTiendaBean> list = new ArrayList<almacenTiendaBean>();
-		list = almacenDao.listAlmacen(estado);
+		list = almacenDao.listAlmacen(estado,idTienda);
 		return list;
+	}
+	
+	@RequestMapping(value="getAlmacenByIdDetalle-{idDetalleSolicitud}" , method = RequestMethod.POST)
+	@ResponseBody
+	public almacenTiendaBean getAlmacenByIdDetalle(@PathVariable("idDetalleSolicitud")Integer idDetalleSolicitud){
+		almacenTiendaBean obj = new almacenTiendaBean();
+		obj = almacenDao.getByIdDetalleAlmacen(idDetalleSolicitud);
+		return obj;
 	}
 }

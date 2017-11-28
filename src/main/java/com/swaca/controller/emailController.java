@@ -47,7 +47,7 @@ public class emailController {
     	 message.setSubject("ANDROID & SMART - Emision de Orden de Compra");
     	 message.setSentDate(new Date());
     	 BodyPart messageBodyPart = new MimeBodyPart();
-    	 messageBodyPart.setText("This is message body");
+    	 messageBodyPart.setText("Se remite la Orden de Compra , espero su confirmación.");
     	 Multipart multipart = new MimeMultipart();
     	 multipart.addBodyPart(messageBodyPart);
     	 messageBodyPart = new MimeBodyPart();
